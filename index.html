@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Bojing (Grace) Jiang, AI engineer in Toronto.">
+<style>body{margin:0}img{max-width:100%}</style>
+<title>Bojing (Grace) Jiang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column (~720px) with a left "margin note" rail for dates; Word Detective gets one full-bleed data panel. */
+:root {
+  --paper: #dce8f7;
+  --surface: #f5f9ff;
+  --ink: #142033;
+  --muted: #4f5f78;
+  --line: #b9cbe3;
+  --accent: #1f4fa3;      /* deep blue */
+  --mark: #d99a1e;        /* ochre: "human" side of the chart */
+  --accent-soft: #cfdff5;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --font-body: "Literata", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e1a2e; --surface: #15243c; --ink: #e4ecf8; --muted: #9db0cc;
+    --line: #263a58; --accent: #7fb0ff; --mark: #f0bd4f; --accent-soft: #1c3256;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e1a2e; --surface: #15243c; --ink: #e4ecf8; --muted: #9db0cc;
+  --line: #263a58; --accent: #7fb0ff; --mark: #f0bd4f; --accent-soft: #1c3256;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  padding-inline: 20px;
+  padding-block: 0 64px;
+}
+.wrap { max-width: 760px; margin: 0 auto; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+
+/* Header */
+header { padding-block: 72px 40px; display: grid; gap: 18px; }
+.kicker { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1 { font-size: clamp(36px, 7.5vw, 66px); font-weight: 800; line-height: .95; letter-spacing: -0.02em; }
+h1 .alt { display: block; font-weight: 400; font-size: .42em; letter-spacing: 0; color: var(--muted); margin-top: 10px; }
+.lede { font-size: 19px; max-width: 60ch; margin: 0; }
+.links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--font-mono); font-size: 13.5px; }
+.links span { color: var(--muted); }
+
+/* Sections */
+section { padding-block: 40px; border-top: 1px solid var(--line); display: grid; gap: 24px; }
+h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+
+.entry { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 24px; }
+.when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 5px; font-variant-numeric: tabular-nums; }
+.entry h3 { font-size: 21px; font-weight: 600; line-height: 1.25; }
+.role { color: var(--muted); font-style: italic; margin: 2px 0 8px; }
+.entry ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.entry li::marker { color: var(--accent); }
+.entries { display: grid; gap: 32px; }
+
+@media (max-width: 600px) {
+  .entry { grid-template-columns: minmax(0, 1fr); }
+  .when { padding-top: 0; }
+}
+
+/* Word Detective feature */
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 28px; display: grid; gap: 18px; }
+.feature h3 { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; }
+.feature .tag { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.feature p { margin: 0; max-width: 62ch; }
+.formula { font-family: var(--font-mono); font-size: 14px; background: var(--accent-soft); padding: 14px 16px; border-radius: 4px; overflow-x: auto; white-space: nowrap; line-height: 1.9; }
+.formula b { font-weight: 500; color: var(--accent); }
+
+.chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; }
+.chart-head .note { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.bars { display: grid; gap: 7px; font-family: var(--font-mono); font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.bar { display: grid; grid-template-columns: 70px minmax(0, 1fr) 44px; align-items: center; gap: 12px; }
+.bar .track { height: 14px; background: var(--accent-soft); border-radius: 2px; overflow: hidden; }
+.bar .fill { height: 100%; background: var(--accent);  }
+.bar .n { text-align: right; color: var(--muted); }
+
+.compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; font-size: 15.5px; }
+.quote.human { border-color: var(--mark); }
+.quote .who { display: block; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.quote em.hit { font-style: normal; background: var(--accent-soft); color: var(--accent); padding: 0 3px; border-radius: 2px; }
+.q { font-size: 14px; color: var(--muted); margin: 0; }
+@media (max-width: 600px) { .compare { grid-template-columns: minmax(0, 1fr); } .feature { padding: 20px; } }
+
+.cta { font-family: var(--font-mono); font-size: 13.5px; }
+
+/* Smaller projects */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
+.proj h3 { font-size: 19px; font-weight: 600; }
+.proj .src { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin: 2px 0 6px; }
+.proj p { margin: 0; font-size: 15.5px; }
+@media (max-width: 600px) { .projects { grid-template-columns: minmax(0, 1fr); } }
+
+.skills { display: grid; gap: 10px; }
+.skills div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 24px; font-size: 15.5px; }
+.skills dt { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 2px; }
+.skills dd { margin: 0; }
+@media (max-width: 600px) { .skills div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
+
+footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <p class="kicker">AI Engineer · Toronto</p>
+    <h1>Bojing (Grace) Jiang</h1>
+    <p class="lede">I'm an AI engineer who turns models into products people use, from LLM agents to on-device computer vision. I finished a Bachelor of Applied Science in Computer Engineering and a Certificate in Artificial Intelligence Engineering at the University of Toronto. I'm finishing a Master of Science in Artificial Intelligence at Golden Gate University.</p>
+    <div class="links">
+      <span>grace.jiang.ai@gmail.com</span>
+      <a href="https://linkedin.com/in/GraceJiang0312">LinkedIn</a>
+      <a href="https://github.com/GraceJiang0312">GitHub</a>
+    </div>
+  </header>
+
+  <section id="recent">
+    <h2>Recent project · Stanford Probability for AI</h2>
+    <div class="feature">
+      <span class="tag">2026 · Interactive tool</span>
+      <h3>Word Detective</h3>
+      <p>Which words give away AI-written text? Word Detective compares paired AI and human answers to the same questions and estimates, for every word, how likely it is to appear in each. The words with the biggest gap are the best clues.</p>
+      <p>The data covers four styles of Q&amp;A: Reddit "Explain Like I'm 5", medical, financial, and CS/AI Wikipedia.</p>
+
+      <div class="formula" role="img" aria-label="Worked example for the word super">
+        Worked example, W = text contains "super"<br>
+        P(W | AI) &nbsp;&nbsp;&nbsp;≈ count(W | AI) / n &nbsp;&nbsp;&nbsp;= 336 / 60,614 ≈ <b>0.0055</b><br>
+        P(W | human) ≈ count(W | human) / n = 5 / 55,922 &nbsp;&nbsp;≈ <b>0.0001</b>
+      </div>
+
+      <div class="chart-head">
+        <strong style="font-family:var(--font-display);font-size:17px">Strongest AI clues on "Explain Like I'm 5"</strong>
+        <span class="note">count(AI) − count(human)</span>
+      </div>
+      <div class="bars" id="bars" aria-label="Top words by count difference"></div>
+
+      <p class="q">Same question, two answers: <em>Why doesn't a candle smoke while burning, but does when you blow it out?</em></p>
+      <div class="compare">
+        <div class="quote"><span class="who">AI</span>When a candle is burning, the flame is <em class="hit">super</em> hot and completely burns all the wax… It's <em class="hit">like</em> the flame eats it all up…</div>
+        <div class="quote human"><span class="who">Human</span>When the flame is lit… that smoke is being burned. The smoke is vaporized wax.</div>
+      </div>
+
+      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/ai-text">Open Word Detective ↗</a>
+      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2" style="margin-top:-10px">Course portfolio ↗</a>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2>Experience</h2>
+    <div class="entries">
+      <div class="entry">
+        <div class="when">2025 – now</div>
+        <div>
+          <h3>Matrix Labs</h3>
+          <p class="role">AI Engineer · Toronto</p>
+          <ul>
+            <li>Worked on <a href="https://agent-launcher-homepage.whitematrix.workers.dev/en">Agent Launcher</a>, a desktop app that wraps coding-agent CLIs (Claude Code, Codex, Gemini CLI, and others) so people who don't use the terminal can install and run them in one click.</li>
+            <li>Added Google's Gemini CLI as a supported agent and fixed how its sessions are saved and resumed.</li>
+            <li>Designed quantitative trading strategies with Bayesian hyperparameter optimization (10.48% backtest return) for agents on World3's AI agent platform.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">2024 – 2024</div>
+        <div>
+          <h3>PRE AI</h3>
+          <p class="role">AI Engineer · Toronto</p>
+          <ul>
+            <li>Built an AI makeup and outfit recommendation app that pairs an image classifier with LLM prompting to turn user photos into tailored suggestions.</li>
+            <li>Ran a human evaluation to choose a more cost-efficient model tier: 94% lower API cost and 40% lower latency at the same quality bar.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">2022 – 2023</div>
+        <div>
+          <h3>Bank of Montreal</h3>
+          <p class="role">Software Developer, Co-op · Toronto</p>
+          <ul>
+            <li>Trained LSTM models for text entity extraction: accuracy went from 80% to 96% on structured documents and from 70% to 92% on semi-structured ones.</li>
+            <li>Added visual question answering for semi-structured documents, choosing the best method per document type.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">2022 – 2022</div>
+        <div>
+          <h3>Amazon</h3>
+          <p class="role">Software Development Engineer, Intern · Vancouver</p>
+          <ul>
+            <li>Redesigned the S3 load generator's networking and threading from blocking to non-blocking, raising throughput from 40K to 70K TPS.</li>
+            <li>Halved the hosts needed per test scenario, my part of the team's continuous load-testing effort, saving about $231K per month.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="entries">
+      <div class="entry">
+        <div class="when">Mar – Dec 2026</div>
+        <div>
+          <h3>Golden Gate University</h3>
+          <p class="role">MS, Artificial Intelligence (remote) · GPA 3.95 / 4.0</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">2026</div>
+        <div>
+          <h3>Stanford University, Probability for AI</h3>
+          <p class="role">Selected participant · designed Word Detective</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">2019 – 2024</div>
+        <div>
+          <h3>University of Toronto</h3>
+          <p class="role">BASc, Computer Engineering · Dean's Honours List · Certificate in AI Engineering</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="when">2026</div>
+        <div>
+          <h3>Alexa She Builds Mentorship</h3>
+          <p class="role">Program selectee</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>More projects</h2>
+    <div class="projects">
+      <div class="proj">
+        <h3>Real-Time Face Tracking</h3>
+        <p class="src">ModiFace · Capstone</p>
+        <p>Pruned and quantized face-tracking models for on-device use: 25 → 45 fps, 40 → 22 ms latency. The tracking underpins L'Oréal's virtual makeup try-on.</p>
+      </div>
+      <div class="proj">
+        <h3>Autonomous Racing</h3>
+        <p class="src">AWS DeepRacer</p>
+        <p>PPO agent with reward shaping for center-line tracking. Ranked 6th of 140 in Canada and 42nd of 1,296 in North America.</p>
+      </div>
+      <div class="proj">
+        <h3>Zoo Tour Guide Agents</h3>
+        <p class="src">Google ADK · Cloud Run</p>
+        <p>A root agent routes questions to a researcher agent and a formatter agent that share session state, running on Gemini through Vertex AI.</p>
+      </div>
+      <div class="proj">
+        <h3>Postcard Puzzler</h3>
+        <p class="src">Web game</p>
+        <p>A daily five-letter word-guessing game with a category and a clue for each day's word.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <dl class="skills">
+      <div><dt>Agents &amp; LLMs</dt><dd>AI agents, multi-agent systems, Google ADK, LangChain, LangGraph, RAG, prompt engineering</dd></div>
+      <div><dt>ML</dt><dd>PyTorch, TensorFlow, NLP, reinforcement learning</dd></div>
+      <div><dt>Cloud</dt><dd>AWS, GCP, Azure, Docker, CI/CD, GitHub Actions</dd></div>
+      <div><dt>Languages</dt><dd>Python, TypeScript, JavaScript, Java, C/C++, SQL</dd></div>
+    </dl>
+  </section>
+
+  <footer>© 2026 Bojing (Grace) Jiang</footer>
+</div>
+
+<script>
+  // Real values from the Word Detective results table (ELI5 dataset, top 10 words).
+  const words = [["like",815],["super",331],["tiny",236],["big",233],["special",167],["make",167],["making",148],["even",135],["it's",134],["little",113]];
+  const max = words[0][1];
+  const host = document.getElementById("bars");
+  host.innerHTML = words.map(([w, n]) =>
+    `<div class="bar"><span>${w}</span><div class="track"><div class="fill" style="width:${(n / max * 100).toFixed(1)}%"></div></div><span class="n">${n}</span></div>`
+  ).join("");
+</script>
+</body>
+</html>
