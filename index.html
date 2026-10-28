@@ -113,6 +113,22 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 
 .cta { font-family: var(--font-mono); font-size: 13.5px; }
 
+.section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; }
+
+/* Project carousel: one feature panel at a time, swipe or use the arrows and dots */
+.carousel { display: grid; gap: 14px; min-width: 0; }
+.slides { display: flex; align-items: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; transition: height .3s ease; }
+.slides::-webkit-scrollbar { display: none; }
+.slides > .feature { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+.carousel-nav { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.arrow { font: 500 15px var(--font-mono); color: var(--accent); background: var(--surface); border: 1px solid var(--line); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; }
+.arrow:hover:not(:disabled) { border-color: var(--accent); }
+.arrow:disabled { opacity: .35; cursor: default; }
+.dots { display: flex; gap: 10px; }
+.dot { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 1px solid var(--accent); background: transparent; cursor: pointer; }
+.dot[aria-current="true"] { background: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .slides { transition: none; scroll-behavior: auto; } }
+
 /* Smaller projects */
 .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
 .proj h3 { font-size: 19px; font-weight: 600; }
@@ -144,8 +160,13 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
   </header>
 
   <section id="recent">
-    <h2>Recent projects · Stanford Probability for AI</h2>
-    <div class="feature">
+    <div class="section-head">
+      <h2>Recent projects · Stanford Probability for AI</h2>
+      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2">Course portfolio ↗</a>
+    </div>
+    <div class="carousel" aria-roledescription="carousel" aria-label="Stanford Probability for AI projects">
+    <div class="slides" id="slides">
+    <div class="feature" role="group" aria-roledescription="slide" aria-label="1 of 2: Word Detective">
       <span class="tag">2026 · Interactive tool</span>
       <h3>Word Detective</h3>
       <p>Which words give away AI-written text? Word Detective compares paired AI and human answers to the same questions and estimates, for every word, how likely it is to appear in each. The words with the biggest gap are the best clues.</p>
@@ -170,10 +191,9 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
       </div>
 
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/ai-text">Open Word Detective ↗</a>
-      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2" style="margin-top:-10px">Course portfolio ↗</a>
     </div>
 
-    <div class="feature">
+    <div class="feature" role="group" aria-roledescription="slide" aria-label="2 of 2: Inference Time Calculator">
       <span class="tag">2026 · Interactive tool</span>
       <h3>Inference Time Calculator</h3>
       <p>How many copies of an AI model do you need before at least one fixes the bug? Give the same bug to several copies at once; if any copy fixes it, you are done. The calculator finds the smallest number of copies that reaches the confidence you want.</p>
@@ -192,6 +212,16 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
       <div class="bars" id="copies" aria-label="Chance of at least one fix by number of copies"></div>
 
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/inference-time">Open Inference Time Calculator ↗</a>
+    </div>
+    </div>
+    <div class="carousel-nav">
+      <button type="button" class="arrow" id="prev" aria-label="Previous project">←</button>
+      <div class="dots" id="dots">
+        <button type="button" class="dot" aria-label="Show Word Detective"></button>
+        <button type="button" class="dot" aria-label="Show Inference Time Calculator"></button>
+      </div>
+      <button type="button" class="arrow" id="next" aria-label="Next project">→</button>
+    </div>
     </div>
   </section>
 
@@ -333,6 +363,39 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     const v = 1 - Math.pow(1 - 0.159, n);
     return `<div class="bar"><span>${n} ${n === 1 ? "copy" : "copies"}</span><div class="track"><div class="fill" style="width:${(v * 100).toFixed(1)}%"></div></div><span class="n">${(v * 100).toFixed(1)}%</span></div>`;
   }).join("");
+
+  // Project carousel
+  const slides = document.getElementById("slides");
+  const panels = [...slides.children];
+  const dots = [...document.querySelectorAll("#dots .dot")];
+  const prev = document.getElementById("prev"), next = document.getElementById("next");
+  const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let current = 0;
+  function show(i) {
+    current = Math.max(0, Math.min(panels.length - 1, i));
+    slides.scrollTo({ left: panels[current].offsetLeft - slides.offsetLeft, behavior: smooth ? "smooth" : "auto" });
+    mark();
+  }
+  function mark() {
+    dots.forEach((d, k) => d.setAttribute("aria-current", String(k === current)));
+    prev.disabled = current === 0;
+    next.disabled = current === panels.length - 1;
+    slides.style.height = panels[current].offsetHeight + "px";
+  }
+  prev.addEventListener("click", () => show(current - 1));
+  next.addEventListener("click", () => show(current + 1));
+  dots.forEach((d, k) => d.addEventListener("click", () => show(k)));
+  slides.addEventListener("scroll", () => {
+    const i = Math.round(slides.scrollLeft / slides.clientWidth);
+    if (i !== current) { current = i; mark(); }
+  }, { passive: true });
+  slides.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") show(current + 1);
+    if (e.key === "ArrowLeft") show(current - 1);
+  });
+  window.addEventListener("resize", mark);
+  window.addEventListener("load", mark);
+  mark();
 </script>
 </body>
 </html>
