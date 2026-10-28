@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: single reading column (~720px) with a left "margin note" rail for dates; Word Detective gets one full-bleed data panel. */
+/* Layout: single reading column (~720px) with a left "margin note" rail for dates; each Stanford PAI project gets a full-width data panel. */
 :root {
   --paper: #dce8f7;
   --surface: #f5f9ff;
@@ -101,6 +101,7 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 .bar .track { height: 14px; background: var(--accent-soft); border-radius: 2px; overflow: hidden; }
 .bar .fill { height: 100%; background: var(--accent);  }
 .bar .n { text-align: right; color: var(--muted); }
+#copies .bar { grid-template-columns: 84px minmax(0, 1fr) 52px; }
 
 .compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; font-size: 15.5px; }
@@ -143,7 +144,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
   </header>
 
   <section id="recent">
-    <h2>Recent project · Stanford Probability for AI</h2>
+    <h2>Recent projects · Stanford Probability for AI</h2>
     <div class="feature">
       <span class="tag">2026 · Interactive tool</span>
       <h3>Word Detective</h3>
@@ -170,6 +171,27 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
 
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/ai-text">Open Word Detective ↗</a>
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2" style="margin-top:-10px">Course portfolio ↗</a>
+    </div>
+
+    <div class="feature">
+      <span class="tag">2026 · Interactive tool</span>
+      <h3>Inference Time Calculator</h3>
+      <p>How many copies of an AI model do you need before at least one fixes the bug? Give the same bug to several copies at once; if any copy fixes it, you are done. The calculator finds the smallest number of copies that reaches the confidence you want.</p>
+      <p>It uses the one-try rate of DeepSeek-Coder-V2-Instruct on real GitHub bugs (SWE-bench Lite), from Brown et al., "Large Language Monkeys," 2024.</p>
+
+      <div class="formula" role="img" aria-label="Worked example for a 99 percent target">
+        E = at least one copy fixes the bug, P(F<sub>i</sub>) = 0.159<br>
+        P(E) = 1 − P(all fail) = 1 − (1 − 0.159)<sup>n</sup><br>
+        1 − 0.841<sup>n</sup> ≥ 0.99 &nbsp;⇒&nbsp; n = ⌈ ln 0.01 / ln 0.841 ⌉ = ⌈ 26.6 ⌉ = <b>27 copies</b>
+      </div>
+
+      <div class="chart-head">
+        <strong style="font-family:var(--font-display);font-size:17px">Chance at least one copy fixes the bug</strong>
+        <span class="note">copies → P(E)</span>
+      </div>
+      <div class="bars" id="copies" aria-label="Chance of at least one fix by number of copies"></div>
+
+      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/inference-time">Open Inference Time Calculator ↗</a>
     </div>
   </section>
 
@@ -262,12 +284,6 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     <h2>More projects</h2>
     <div class="projects">
       <div class="proj">
-        <h3>Inference Time Calculator</h3>
-        <p class="src">Stanford Probability for AI · Interactive tool</p>
-        <p>How many copies of an AI model do you need before at least one fixes the bug? Uses P(at least one) = 1 − (1 − p)ⁿ with real SWE-bench Lite rates: at 15.9% per try, 27 copies reach 99%.</p>
-        <p style="margin-top:6px"><a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/inference-time">Open calculator ↗</a></p>
-      </div>
-      <div class="proj">
         <h3>Real-Time Face Tracking</h3>
         <p class="src">ModiFace · Capstone</p>
         <p>Pruned and quantized face-tracking models for on-device use: 25 → 45 fps, 40 → 22 ms latency. The tracking underpins L'Oréal's virtual makeup try-on.</p>
@@ -311,6 +327,12 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
   host.innerHTML = words.map(([w, n]) =>
     `<div class="bar"><span>${w}</span><div class="track"><div class="fill" style="width:${(n / max * 100).toFixed(1)}%"></div></div><span class="n">${n}</span></div>`
   ).join("");
+
+  // P(at least one of n copies fixes the bug) with a one-try rate of 0.159.
+  document.getElementById("copies").innerHTML = [1, 5, 10, 20, 27].map((n) => {
+    const v = 1 - Math.pow(1 - 0.159, n);
+    return `<div class="bar"><span>${n} ${n === 1 ? "copy" : "copies"}</span><div class="track"><div class="fill" style="width:${(v * 100).toFixed(1)}%"></div></div><span class="n">${(v * 100).toFixed(1)}%</span></div>`;
+  }).join("");
 </script>
 </body>
 </html>
