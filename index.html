@@ -132,6 +132,13 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 /* Smaller projects */
 .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
 .proj h3 { font-size: 19px; font-weight: 600; }
+.proj .thumb { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 14px; }
+.thumb .ln { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.thumb .soft { fill: var(--accent-soft); }
+.thumb .dotc { fill: var(--accent); }
+.thumb .mk { fill: var(--mark); }
+.thumb .lbl { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+.thumb .tile { font-family: var(--font-display); font-size: 22px; font-weight: 800; fill: var(--ink); text-anchor: middle; }
 .proj .src { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin: 2px 0 6px; }
 .proj p { margin: 0; font-size: 15.5px; }
 @media (max-width: 600px) { .projects { grid-template-columns: minmax(0, 1fr); } }
@@ -360,21 +367,51 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     <h2>More projects</h2>
     <div class="projects">
       <div class="proj">
+        <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Face outline with tracked landmark points inside a detection box">
+          <rect class="soft" x="110" y="22" width="100" height="136" rx="4"/>
+          <rect class="ln" x="110" y="22" width="100" height="136" rx="4" stroke-dasharray="6 5"/>
+          <ellipse class="ln" cx="160" cy="90" rx="38" ry="50"/>
+          <g class="dotc"><circle cx="145" cy="78" r="3"/><circle cx="175" cy="78" r="3"/><circle cx="160" cy="95" r="3"/><circle cx="148" cy="114" r="2.5"/><circle cx="160" cy="117" r="2.5"/><circle cx="172" cy="114" r="2.5"/><circle cx="136" cy="70" r="2"/><circle cx="184" cy="70" r="2"/><circle cx="125" cy="98" r="2"/><circle cx="195" cy="98" r="2"/><circle cx="160" cy="138" r="2"/></g>
+          <path class="ln" d="M148 114 Q160 124 172 114" stroke="var(--mark)"/>
+          <text class="lbl" x="226" y="40">45 fps</text><text class="lbl" x="226" y="58">22 ms</text>
+        </svg>
         <h3>Real-Time Face Tracking</h3>
         <p class="src">ModiFace · Capstone</p>
         <p>Pruned and quantized face-tracking models for on-device use: 25 → 45 fps, 40 → 22 ms latency. The tracking underpins L'Oréal's virtual makeup try-on.</p>
       </div>
       <div class="proj">
+        <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Race track loop with a dashed center line and a car following it">
+          <path class="soft" d="M70 40 H250 A50 50 0 0 1 250 140 H70 A50 50 0 0 1 70 40 Z M90 70 H230 A20 20 0 0 1 230 110 H90 A20 20 0 0 1 90 70 Z" fill-rule="evenodd"/>
+          <path class="ln" d="M70 40 H250 A50 50 0 0 1 250 140 H70 A50 50 0 0 1 70 40 Z"/>
+          <path class="ln" d="M90 70 H230 A20 20 0 0 1 230 110 H90 A20 20 0 0 1 90 70 Z"/>
+          <path class="ln" d="M80 55 H240 A35 35 0 0 1 240 125 H80 A35 35 0 0 1 80 55 Z" stroke="var(--mark)" stroke-dasharray="5 7" stroke-width="1.5"/>
+          <rect class="dotc" x="150" y="48" width="22" height="14" rx="4"/>
+          <text class="lbl" x="160" y="166" text-anchor="middle">6th of 140 · Canada</text>
+        </svg>
         <h3>Autonomous Racing</h3>
         <p class="src">AWS DeepRacer</p>
         <p>PPO agent with reward shaping for center-line tracking. Ranked 6th of 140 in Canada and 42nd of 1,296 in North America.</p>
       </div>
       <div class="proj">
+        <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="A root agent routing to a researcher agent and a formatter agent that share session state">
+          <path class="ln" d="M160 56 L95 104 M160 56 L225 104"/>
+          <path class="ln" d="M125 126 H195" stroke="var(--mark)" stroke-dasharray="4 5"/>
+          <rect class="soft" x="115" y="24" width="90" height="34" rx="17"/><rect class="ln" x="115" y="24" width="90" height="34" rx="17"/>
+          <rect class="soft" x="40" y="106" width="100" height="34" rx="17"/><rect class="ln" x="40" y="106" width="100" height="34" rx="17"/>
+          <rect class="soft" x="180" y="106" width="100" height="34" rx="17"/><rect class="ln" x="180" y="106" width="100" height="34" rx="17"/>
+          <text class="lbl" x="160" y="45" text-anchor="middle" style="fill:var(--ink)">root</text>
+          <text class="lbl" x="90" y="127" text-anchor="middle" style="fill:var(--ink)">researcher</text>
+          <text class="lbl" x="230" y="127" text-anchor="middle" style="fill:var(--ink)">formatter</text>
+          <text class="lbl" x="160" y="164" text-anchor="middle">shared session state</text>
+        </svg>
         <h3>Zoo Tour Guide Agents</h3>
         <p class="src">Google ADK · Cloud Run</p>
         <p>A root agent routes questions to a researcher agent and a formatter agent that share session state, running on Gemini through Vertex AI.</p>
       </div>
       <div class="proj">
+        <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Five letter tiles of a word-guessing game">
+          <rect class="dotc" x="40" y="69" width="42" height="42" rx="4"/><text class="tile" x="61" y="98" style="fill:var(--surface)">P</text><rect class="soft" x="90" y="69" width="42" height="42" rx="4"/><text class="tile" x="111" y="98">O</text><rect class="mk" x="140" y="69" width="42" height="42" rx="4"/><text class="tile" x="161" y="98">S</text><rect class="soft" x="190" y="69" width="42" height="42" rx="4"/><text class="tile" x="211" y="98">T</text><rect class="dotc" x="240" y="69" width="42" height="42" rx="4"/><text class="tile" x="261" y="98" style="fill:var(--surface)">C</text>
+        </svg>
         <h3>Postcard Puzzler</h3>
         <p class="src">Web game</p>
         <p>A daily five-letter word-guessing game with a category and a clue for each day's word.</p>
