@@ -66,6 +66,8 @@ header { padding-block: 72px 40px; display: grid; gap: 18px; }
 h1 { font-family: "EB Garamond", var(--font-body); font-size: clamp(36px, 7.5vw, 66px); font-weight: 500; line-height: 1.05; letter-spacing: -0.01em; }
 h1 .alt { display: block; font-weight: 400; font-size: .42em; letter-spacing: 0; color: var(--muted); margin-top: 10px; }
 .lede { font-size: 19px; max-width: 60ch; margin: 0; }
+.lede { display: grid; gap: 10px; }
+.lede p { margin: 0; }
 .links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--font-mono); font-size: 13.5px; }
 .links span { color: var(--muted); }
 
@@ -191,7 +193,11 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
   <header>
     <p class="kicker">AI Engineer · Toronto</p>
     <h1>Bojing (Grace) Jiang</h1>
-    <p class="lede">I'm an AI engineer who turns models into products people use, from LLM agents to on-device computer vision. I finished a Bachelor of Applied Science in Computer Engineering and a Certificate in Artificial Intelligence Engineering at the University of Toronto. I'm finishing a Master of Science in Artificial Intelligence at Golden Gate University.</p>
+    <div class="lede">
+      <p>I'm an AI engineer who turns models into products people use, from LLM agents to on-device computer vision.</p>
+      <p>I finished a Bachelor of Applied Science in Computer Engineering and a Certificate in Artificial Intelligence Engineering at the University of Toronto.</p>
+      <p>I'm finishing a Master of Science in Artificial Intelligence at Golden Gate University.</p>
+    </div>
     <div class="links">
       <span>grace.jiang.ai@gmail.com</span>
       <a href="https://linkedin.com/in/GraceJiang0312">LinkedIn</a>
