@@ -600,7 +600,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
       { guesses: [["Paris", 0.38], ["Lou", 0.05], ["Nice", 0.03], ["Rome", 0.002]] },
       { guesses: [["Rome", 0.99], ["Luc", 0.001], ["New", 0.001], ["Manchester", 0.0005]] },
     ];
-    const W = 640, H = 420, L = 12, cw = 50, gx = 62, x0 = 62, yb = 352, dy = 17, sk = 12, th = 9;
+    const W = 640, H = 460, L = 12, cw = 42, gx = 62, x0 = 66, yb = 388, dy = 20, sk = 14, th = 15;
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
     const base = [];
     for (let l = 0; l < L; l++) { base.push([]); for (let i = 0; i < toks.length; i++) {
@@ -671,7 +671,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
 
   // Small Art Model: draw one city from the story, with the slider values shown in the course app.
   function drawCity() {
-    const th1 = 0.5, th4 = 0.56, th2 = 0.12, th3 = 0.76, B = 24, cw = 22, cell = 9, gap = 3, W = B * (cw + gap) + gap, H = 20 * (cell + gap) + 36;
+    const th1 = 0.5, th4 = 0.56, th2 = 0.12, th3 = 0.76, B = 24, cw = 18, cell = 15, gap = 3, W = B * (cw + gap) + gap, H = 20 * (cell + gap) + 36;
     const coin = (p) => Math.random() < p;
     let out = `<rect width="${W}" height="${H}" rx="6" fill="#0b1026"/><circle cx="${W - 24}" cy="20" r="9" fill="#fbecc0"/>`;
     for (let s = 0; s < 22; s++) out += `<circle cx="${(Math.random() * W).toFixed(1)}" cy="${(Math.random() * 60 + 4).toFixed(1)}" r=".9" fill="#c9d4ff" opacity=".7"/>`;
