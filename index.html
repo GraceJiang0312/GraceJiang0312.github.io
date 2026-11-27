@@ -130,6 +130,14 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 .dot[aria-current="true"] { background: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .slides { transition: none; scroll-behavior: auto; } }
 
+.toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.toggle button { font: 500 12.5px var(--font-mono); color: var(--muted); background: var(--surface); border: 0; padding: 6px 12px; cursor: pointer; }
+.toggle button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+#gpt svg .tile { transition: fill-opacity .7s ease; }
+#gpt svg .pbar { transform-box: fill-box; transform-origin: center bottom; transition: transform .7s ease; }
+#gpt svg .arc { transition: opacity .7s ease; }
+@media (prefers-reduced-motion: reduce) { #gpt svg * { transition: none !important; } }
+
 /* Smaller projects */
 .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
 .proj h3 { font-size: 19px; font-weight: 600; }
@@ -174,7 +182,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     </div>
     <div class="carousel" aria-roledescription="carousel" aria-label="Stanford Probability for AI projects">
     <div class="slides" id="slides">
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="1 of 4: Word Detective">
+    <div class="feature" role="group" aria-roledescription="slide" aria-label="1 of 5: Word Detective">
       <span class="tag">2026 · Interactive tool</span>
       <h3>Word Detective</h3>
       <p>Which words give away AI-written text? Word Detective compares paired AI and human answers to the same questions and estimates, for every word, how likely it is to appear in each. The words with the biggest gap are the best clues.</p>
@@ -201,7 +209,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/ai-text">Open Word Detective ↗</a>
     </div>
 
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="2 of 4: Inference Time Calculator">
+    <div class="feature" role="group" aria-roledescription="slide" aria-label="2 of 5: Inference Time Calculator">
       <span class="tag">2026 · Interactive tool</span>
       <h3>Inference Time Calculator</h3>
       <p>How many copies of an AI model do you need before at least one fixes the bug? Give the same bug to several copies at once; if any copy fixes it, you are done. The calculator finds the smallest number of copies that reaches the confidence you want.</p>
@@ -222,7 +230,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/inference-time">Open Inference Time Calculator ↗</a>
     </div>
 
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="3 of 4: Small Art Model">
+    <div class="feature" role="group" aria-roledescription="slide" aria-label="3 of 5: Small Art Model">
       <span class="tag">2026 · Generative model</span>
       <h3>Small Art Model</h3>
       <p>Small Art Model paints a city street at night from a short probabilistic story. Each building gets a random height and is either an office or an apartment, and each window is lit with a chance that depends on which. Run the story again and you get a new city.</p>
@@ -244,7 +252,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/small-art-model">Open Small Art Model ↗</a>
     </div>
 
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="4 of 4: The Hidden Chamber">
+    <div class="feature" role="group" aria-roledescription="slide" aria-label="4 of 5: The Hidden Chamber">
       <span class="tag">2026 · Interactive tool</span>
       <h3>The Hidden Chamber</h3>
       <p>In 2017 a team found a hidden hollow in the Great Pyramid without moving a stone: they counted muons, particles from space that pass through rock, under it. The Hidden Chamber does the same in a pyramid of its own. A plate under it counts muons each minute for an hour; less stone above means more get through.</p>
@@ -265,6 +273,33 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
 
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/hidden-chamber">Open The Hidden Chamber ↗</a>
     </div>
+
+    <div class="feature" role="group" aria-roledescription="slide" aria-label="5 of 5: Rewrite GPT-2">
+      <span class="tag">2026 · Model editing</span>
+      <h3>Rewrite GPT-2</h3>
+      <p>Where does a language model keep a fact? Rewrite GPT-2 looks inside GPT-2 for the fact that the Louvre is in Paris, then trains a copy to believe it is in Rome. Switching off one part of the model at a time (ablation) shows which part the answer depends on.</p>
+      <p>Gradient ascent on the log-likelihood of "Rome" then changes only that part: one 768-number row of the word-embedding table, out of 124,439,808 parameters, trained on 4 sentences. On new sentences it never saw, 4 of 4 goal lines held, and sentences with no Louvre in them kept their answer.</p>
+
+      <div class="formula" role="img" aria-label="The rewrite and its result">
+        maximize (1/4) Σ log₁₀ P(Rome | sentence), step size 0.2<br>
+        change only: the embedding row for "vre" (768 parameters)<br>
+        log-likelihood: −1.65 → ≈ 0 in 120 steps<br>
+        "The Louvre is located in the city of ___": P(Paris) <b>0.38</b> → P(Rome) <b>0.99</b>
+      </div>
+
+      <div class="chart-head">
+        <strong style="font-family:var(--font-display);font-size:17px">Inside GPT-2: 12 layers over the sentence</strong>
+        <div class="toggle" id="gptToggle" role="group" aria-label="Show GPT-2 before or after the rewrite">
+          <button type="button" data-s="0" aria-pressed="true">Before</button><button type="button" data-s="1" aria-pressed="false">After rewrite</button>
+        </div>
+      </div>
+      <div id="gpt" aria-label="GPT-2 layers over the sentence The Louvre is located in the city of, with its next-word guesses"></div>
+      <p class="q">Switching off the row for <em>vre</em> drops P(Paris) from 0.61 to 0.02; the row for <em>city</em> barely matters (0.59). So the rewrite changes only the <em>vre</em> row.</p>
+
+      <p class="q">Editing one fact in a language model without changing anything else is still an open research problem (Meng et al., "Locating and Editing Factual Associations in GPT", 2022).</p>
+
+      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/rewrite-gpt2">Open Rewrite GPT-2 ↗</a>
+    </div>
     </div>
     <div class="carousel-nav">
       <button type="button" class="arrow" id="prev" aria-label="Previous project">←</button>
@@ -273,6 +308,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
         <button type="button" class="dot" aria-label="Show Inference Time Calculator"></button>
         <button type="button" class="dot" aria-label="Show Small Art Model"></button>
         <button type="button" class="dot" aria-label="Show The Hidden Chamber"></button>
+        <button type="button" class="dot" aria-label="Show Rewrite GPT-2"></button>
       </div>
       <button type="button" class="arrow" id="next" aria-label="Next project">→</button>
     </div>
@@ -344,7 +380,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
         <div class="when">2026</div>
         <div>
           <h3>Stanford University, Probability for AI</h3>
-          <p class="role">Selected participant · designed Word Detective, Inference Time Calculator, Small Art Model and The Hidden Chamber</p>
+          <p class="role">Selected participant · designed Word Detective, Inference Time Calculator, Small Art Model, The Hidden Chamber and Rewrite GPT-2</p>
         </div>
       </div>
       <div class="entry">
@@ -457,6 +493,82 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     document.getElementById("muons").innerHTML = rows.map(([k, m]) =>
       `<div class="bar"><span>${k} muon${k === 1 ? "" : "s"}</span><div class="track"><div class="fill" style="width:${(m / top * 100).toFixed(1)}%"></div></div><span class="n">${m.toFixed(1)}</span></div>`
     ).join("");
+  })();
+
+  // Rewrite GPT-2: a layer stack over the sentence, before and after the rewrite (numbers from the course app).
+  (() => {
+    const toks = ["The", "Lou", "vre", "is", "located", "in", "the", "city", "of"];
+    const states = [
+      { guesses: [["Paris", 0.38], ["Lou", 0.05], ["Nice", 0.03], ["Rome", 0.002]] },
+      { guesses: [["Rome", 0.99], ["Luc", 0.001], ["New", 0.001], ["Manchester", 0.0005]] },
+    ];
+    const W = 640, H = 420, L = 12, cw = 50, gx = 62, x0 = 62, yb = 352, dy = 17, sk = 12, th = 9;
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const base = [];
+    for (let l = 0; l < L; l++) { base.push([]); for (let i = 0; i < toks.length; i++) {
+      let v = 0.08 + 0.35 * rnd();
+      if (i === 2) v += 0.35 + 0.02 * l; if (i === 1) v += 0.15; if (i === 8) v += 0.12 + 0.03 * l;
+      base[l].push(Math.min(v, 1));
+    } }
+    let svg = `<rect width="${W}" height="${H}" rx="6" fill="#0b1026"/>`;
+    // next-word guesses
+    const px = (k) => 150 + k * 112, pyb = 78;
+    for (let k = 0; k < 4; k++) {
+      svg += `<rect class="pbar" data-k="${k}" x="${px(k) - 14}" y="${pyb - 54}" width="28" height="54" rx="2" fill="#7fd3ff"/>`;
+      svg += `<text class="pv" data-k="${k}" x="${px(k)}" y="${pyb - 6}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#f07ce8"></text>`;
+      svg += `<text class="pw" data-k="${k}" x="${px(k)}" y="${pyb + 18}" text-anchor="middle" font-family="Literata, Georgia, serif" font-size="15" fill="#e4ecf8"></text>`;
+      svg += `<circle class="pc" data-k="${k}" cx="${px(k)}" cy="${pyb + 34}" r="7" stroke="#f07ce8" stroke-width="1.5"/>`;
+    }
+    // arcs from the top layer to the winning guess
+    const topY = yb - (L - 1) * dy - th;
+    for (let i = 0; i < toks.length; i++) {
+      const sx = x0 + i * gx + cw / 2 + sk;
+      svg += `<path class="arc" d="M${sx} ${topY} Q ${(sx + px(0)) / 2} ${topY - 70} ${px(0)} ${pyb + 42}" fill="none" stroke="#f07ce8" stroke-width="${i === 2 || i === 8 ? 1.6 : 0.8}" opacity=".55"/>`;
+    }
+    // layer tiles, bottom (embeddings) to top
+    for (let l = 0; l < L; l++) {
+      const y = yb - l * dy;
+      for (let i = 0; i < toks.length; i++) {
+        const x = x0 + i * gx + l * 0;
+        svg += `<path d="M${x} ${y} h${cw} l${sk} ${-th} h${-cw} z" fill="#1a2a4a" stroke="#3b5a85" stroke-width=".6"/>`;
+        svg += `<path class="tile" data-l="${l}" data-i="${i}" d="M${x} ${y} h${cw} l${sk} ${-th} h${-cw} z" fill="#f07ce8" fill-opacity="0"/>`;
+      }
+      if (l === 0 || l === L - 1) svg += `<text x="${x0 - 10}" y="${y - 2}" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#9db0cc">${l === 0 ? "embed" : "layer 12"}</text>`;
+    }
+    // the changed row
+    const vx = x0 + 2 * gx;
+    svg += `<path id="vreRow" d="M${vx - 2} ${yb + 1} h${cw + 4} l${sk} ${-th - 2} h${-cw - 4} z" fill="none" stroke="#f0bd4f" stroke-width="2" opacity="0"/>`;
+    svg += `<text id="vreNote" x="${vx + cw / 2 + sk / 2}" y="${H - 10}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#f0bd4f" opacity="0">768 numbers changed</text>`;
+    // tokens
+    toks.forEach((t, i) => {
+      const cx = x0 + i * gx + cw / 2 + sk / 2;
+      svg += `<rect x="${cx - 24}" y="${yb + 8}" width="48" height="24" rx="5" fill="#15243c" stroke="${i === 2 ? "#f0bd4f" : "#3b5a85"}"/>`;
+      svg += `<text x="${cx}" y="${yb + 25}" text-anchor="middle" font-family="Literata, Georgia, serif" font-size="13" fill="#e4ecf8">${t}</text>`;
+    });
+    const host = document.getElementById("gpt");
+    host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;border-radius:6px">${svg}</svg>`;
+    const q = (sel) => [...host.querySelectorAll(sel)];
+    const btns = [...document.querySelectorAll("#gptToggle button")];
+    function render(s) {
+      const g = states[s].guesses;
+      q(".pbar").forEach((r) => { const v = g[r.dataset.k][1]; r.style.transform = `scaleY(${Math.max(v, 0.02)})`; });
+      q(".pv").forEach((t) => { const v = g[t.dataset.k][1]; t.textContent = v < 0.001 ? "<0.001" : String(v); t.setAttribute("y", pyb - 54 * Math.max(v, 0.02) - 6); });
+      q(".pw").forEach((t) => (t.textContent = g[t.dataset.k][0]));
+      q(".pc").forEach((c) => c.setAttribute("fill", c.dataset.k === "0" ? "#f07ce8" : "none"));
+      q(".tile").forEach((t) => {
+        const l = +t.dataset.l, i = +t.dataset.i;
+        let v = base[l][i];
+        if (s === 1 && i === 2) v = Math.min(1, v + 0.25);
+        if (s === 1 && i !== 2 && i !== 8) v *= 0.85;
+        t.setAttribute("fill-opacity", (0.12 + 0.8 * v).toFixed(2));
+      });
+      host.querySelector("#vreRow").setAttribute("opacity", s);
+      host.querySelector("#vreNote").setAttribute("opacity", s);
+      btns.forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.s === s)));
+    }
+    let auto = matchMedia("(prefers-reduced-motion: reduce)").matches ? null : setInterval(() => render(btns[0].getAttribute("aria-pressed") === "true" ? 1 : 0), 3500);
+    btns.forEach((b) => b.addEventListener("click", () => { clearInterval(auto); render(+b.dataset.s); }));
+    render(0);
   })();
 
   // Small Art Model: draw one city from the story, with the slider values shown in the course app.
