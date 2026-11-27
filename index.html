@@ -213,68 +213,16 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
   </header>
 
   <nav class="tabs" aria-label="Sections">
-    <a href="#about" data-tab="about">About</a>
     <a href="#projects" data-tab="projects">Recent projects</a>
     <a href="#experience" data-tab="experience">Experience</a>
     <a href="#more" data-tab="more">More projects</a>
+    <a href="#about" data-tab="about">About</a>
+    <a href="#education" data-tab="education">Education</a>
+    <a href="#skills" data-tab="skills">Skills</a>
   </nav>
 
   <main>
-    <div class="page" data-page="about">
-      <section class="intro">
-        <div class="lede">
-          <p>I'm an AI engineer who turns models into products people use, from LLM agents to on-device computer vision.</p>
-          <p>I finished a Bachelor of Applied Science in Computer Engineering and a Certificate in Artificial Intelligence Engineering at the University of Toronto.</p>
-          <p>I'm finishing a Master of Science in Artificial Intelligence at Golden Gate University.</p>
-        </div>
-      </section>
-
-    <section id="education">
-      <h2>Education</h2>
-      <div class="entries">
-        <div class="entry">
-          <div class="when">2026</div>
-          <div>
-            <h3>Stanford University, Probability for AI</h3>
-            <p class="role">Selected participant</p>
-          </div>
-        </div>
-        <div class="entry">
-          <div class="when">2026</div>
-          <div>
-            <h3>Alexa She Builds Mentorship</h3>
-            <p class="role">Program selectee</p>
-          </div>
-        </div>
-        <div class="entry">
-          <div class="when">2026 – Present</div>
-          <div>
-            <h3>Golden Gate University</h3>
-            <p class="role">MS, Artificial Intelligence (remote) · GPA 3.95 / 4.0</p>
-          </div>
-        </div>
-        <div class="entry">
-          <div class="when">2019 – 2024</div>
-          <div>
-            <h3>University of Toronto</h3>
-            <p class="role">BASc, Computer Engineering · Dean's Honours List · Certificate in AI Engineering</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <h2>Skills</h2>
-      <dl class="skills">
-        <div><dt>Agents &amp; LLMs</dt><dd>AI agents, multi-agent systems, Google ADK, LangChain, LangGraph, RAG, prompt engineering</dd></div>
-        <div><dt>ML</dt><dd>PyTorch, TensorFlow, NLP, reinforcement learning</dd></div>
-        <div><dt>Cloud</dt><dd>AWS, GCP, Azure, Docker, CI/CD, GitHub Actions</dd></div>
-        <div><dt>Languages</dt><dd>Python, TypeScript, JavaScript, Java, C/C++, SQL</dd></div>
-      </dl>
-    </section>
-    </div>
-
-    <div class="page" data-page="projects" hidden>
+    <div class="page" data-page="projects">
     <section id="recent">
       <div class="section-head">
         <h2>Recent projects · Stanford Probability for AI</h2>
@@ -522,6 +470,64 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
           <p>A daily five-letter word-guessing game with a category and a clue for each day's word.</p>
         </div>
       </div>
+    </section>
+    </div>
+
+    <div class="page" data-page="about" hidden>
+      <section class="intro">
+        <div class="lede">
+          <p>I'm an AI engineer who turns models into products people use, from LLM agents to on-device computer vision.</p>
+          <p>I finished a Bachelor of Applied Science in Computer Engineering and a Certificate in Artificial Intelligence Engineering at the University of Toronto.</p>
+          <p>I'm finishing a Master of Science in Artificial Intelligence at Golden Gate University.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="page" data-page="education" hidden>
+    <section id="education">
+      <h2>Education</h2>
+      <div class="entries">
+        <div class="entry">
+          <div class="when">2026</div>
+          <div>
+            <h3>Stanford University, Probability for AI</h3>
+            <p class="role">Selected participant</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">2026</div>
+          <div>
+            <h3>Alexa She Builds Mentorship</h3>
+            <p class="role">Program selectee</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">2026 – Present</div>
+          <div>
+            <h3>Golden Gate University</h3>
+            <p class="role">MS, Artificial Intelligence (remote) · GPA 3.95 / 4.0</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">2019 – 2024</div>
+          <div>
+            <h3>University of Toronto</h3>
+            <p class="role">BASc, Computer Engineering · Dean's Honours List · Certificate in AI Engineering</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <div class="page" data-page="skills" hidden>
+    <section id="skills">
+      <h2>Skills</h2>
+      <dl class="skills">
+        <div><dt>Agents &amp; LLMs</dt><dd>AI agents, multi-agent systems, Google ADK, LangChain, LangGraph, RAG, prompt engineering</dd></div>
+        <div><dt>ML</dt><dd>PyTorch, TensorFlow, NLP, reinforcement learning</dd></div>
+        <div><dt>Cloud</dt><dd>AWS, GCP, Azure, Docker, CI/CD, GitHub Actions</dd></div>
+        <div><dt>Languages</dt><dd>Python, TypeScript, JavaScript, Java, C/C++, SQL</dd></div>
+      </dl>
     </section>
     </div>
   </main>
