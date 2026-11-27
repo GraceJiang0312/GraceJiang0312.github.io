@@ -83,8 +83,11 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 .entry li::marker { color: var(--accent); }
 .entries { display: grid; gap: 32px; }
 
+/* Each job's picture sits under its bullets */
+.entry.has-pic .exp-pic { grid-column: 2; max-width: 340px; margin: 12px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
 @media (max-width: 600px) {
-  .entry { grid-template-columns: minmax(0, 1fr); }
+  .entry, .entry.has-pic { grid-template-columns: minmax(0, 1fr); }
+  .entry.has-pic .exp-pic { grid-column: 1; }
   .when { padding-top: 0; }
 }
 
@@ -306,7 +309,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
   <section id="work">
     <h2>Experience</h2>
     <div class="entries">
-      <div class="entry">
+      <div class="entry has-pic">
         <div class="when">2025 – Present</div>
         <div>
           <h3>Matrix Labs</h3>
@@ -317,8 +320,16 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
             <li>Designed quantitative trading strategies with Bayesian hyperparameter optimization (10.48% backtest return) for agents on World3's AI agent platform.</li>
           </ul>
         </div>
+        <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="Agent Launcher window listing Claude Code, Codex and Gemini CLI, each with a one-click Run button">
+          <rect class="soft" x="20" y="12" width="280" height="156" rx="8"/><rect class="ln" x="20" y="12" width="280" height="156" rx="8"/>
+          <path class="ln" d="M20 34 H300"/><g class="dotc"><circle cx="34" cy="23" r="3"/><circle cx="45" cy="23" r="3"/><circle cx="56" cy="23" r="3"/></g>
+          <text class="lbl" x="160" y="27" text-anchor="middle">Agent Launcher</text>
+          <g><rect x="34" y="46" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--line)"/><circle class="dotc" cx="52" cy="62" r="7"/><text class="lbl" x="68" y="66" style="fill:var(--ink)">Claude Code</text><rect class="dotc" x="236" y="53" width="40" height="18" rx="9"/><text class="lbl" x="256" y="66" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
+          <g><rect x="34" y="84" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--line)"/><circle class="dotc" cx="52" cy="100" r="7"/><text class="lbl" x="68" y="104" style="fill:var(--ink)">Codex</text><rect class="dotc" x="236" y="91" width="40" height="18" rx="9"/><text class="lbl" x="256" y="104" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
+          <g><rect x="34" y="122" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--mark)" stroke-width="2"/><circle class="mk" cx="52" cy="138" r="7"/><text class="lbl" x="68" y="142" style="fill:var(--ink)">Gemini CLI</text><text class="lbl" x="150" y="142" style="fill:var(--mark)">added</text><rect class="dotc" x="236" y="129" width="40" height="18" rx="9"/><text class="lbl" x="256" y="142" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
+        </svg>
       </div>
-      <div class="entry">
+      <div class="entry has-pic">
         <div class="when">2024 – 2024</div>
         <div>
           <h3>PRE AI</h3>
@@ -328,8 +339,18 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
             <li>Ran a human evaluation to choose a more cost-efficient model tier: 94% lower API cost and 40% lower latency at the same quality bar.</li>
           </ul>
         </div>
+        <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="Phone showing a face photo turned into makeup colour suggestions">
+          <rect class="soft" x="106" y="10" width="108" height="160" rx="14"/><rect class="ln" x="106" y="10" width="108" height="160" rx="14"/>
+          <path class="ln" d="M148 20 H172"/>
+          <ellipse class="ln" cx="160" cy="62" rx="20" ry="26"/><circle class="dotc" cx="152" cy="58" r="2"/><circle class="dotc" cx="168" cy="58" r="2"/><path d="M152 74 Q160 79 168 74" fill="none" stroke="var(--mark)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="132" cy="110" r="9" fill="#c2566e"/><circle cx="160" cy="110" r="9" fill="#e0917a"/><circle cx="188" cy="110" r="9" fill="#9a4a6a"/>
+          <rect x="114" y="126" width="92" height="16" rx="7" fill="var(--surface)" stroke="var(--line)"/><text class="lbl" x="160" y="138" text-anchor="middle" style="fill:var(--ink)">rose · coral</text>
+          <rect x="114" y="147" width="92" height="16" rx="7" fill="var(--surface)" stroke="var(--line)"/><text class="lbl" x="160" y="159" text-anchor="middle" style="fill:var(--ink)">linen blazer</text>
+          <text x="54" y="80" text-anchor="middle" style="font:700 26px var(--font-display);fill:var(--accent)">94%</text><text class="lbl" x="54" y="98" text-anchor="middle">lower API cost</text>
+          <text x="266" y="80" text-anchor="middle" style="font:700 26px var(--font-display);fill:var(--accent)">40%</text><text class="lbl" x="266" y="98" text-anchor="middle">lower latency</text>
+        </svg>
       </div>
-      <div class="entry">
+      <div class="entry has-pic">
         <div class="when">2022 – 2023</div>
         <div>
           <h3>Bank of Montreal</h3>
@@ -339,8 +360,20 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
             <li>Added visual question answering for semi-structured documents, choosing the best method per document type.</li>
           </ul>
         </div>
+        <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="A document with extracted fields highlighted, and accuracy rising from 80 to 96 percent and from 70 to 92 percent">
+          <rect x="22" y="14" width="104" height="152" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+          <g class="ln" stroke-width="1.5" stroke="var(--line)"><path d="M34 34 H90"/><path d="M34 60 H114"/><path d="M34 74 H100"/><path d="M34 100 H114"/><path d="M34 114 H84"/><path d="M34 140 H108"/></g>
+          <rect class="soft" x="30" y="26" width="64" height="15" rx="2" stroke="var(--accent)"/><rect x="30" y="92" width="58" height="15" rx="2" fill="none" stroke="var(--mark)" stroke-width="2"/><rect class="soft" x="30" y="132" width="50" height="15" rx="2" stroke="var(--accent)"/>
+          <path class="ln" d="M134 90 H150 M144 84 L150 90 L144 96"/>
+          <text class="lbl" x="160" y="50">structured</text>
+          <rect x="160" y="58" width="96" height="11" rx="2" fill="var(--line)"/><text class="lbl" x="262" y="67">80%</text>
+          <rect class="dotc" x="160" y="73" width="115" height="11" rx="2"/><text class="lbl" x="281" y="82" style="fill:var(--accent)">96%</text>
+          <text class="lbl" x="160" y="112">semi-structured</text>
+          <rect x="160" y="120" width="84" height="11" rx="2" fill="var(--line)"/><text class="lbl" x="250" y="129">70%</text>
+          <rect class="dotc" x="160" y="135" width="110" height="11" rx="2"/><text class="lbl" x="276" y="144" style="fill:var(--accent)">92%</text>
+        </svg>
       </div>
-      <div class="entry">
+      <div class="entry has-pic">
         <div class="when">2022 – 2022</div>
         <div>
           <h3>Amazon</h3>
@@ -350,6 +383,16 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
             <li>Halved the hosts needed per test scenario, my part of the team's continuous load-testing effort, saving about $231K per month.</li>
           </ul>
         </div>
+        <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="A load generator sending many requests to an S3 bucket, throughput rising from 40K to 70K per second">
+          <rect class="soft" x="22" y="30" width="78" height="56" rx="6"/><rect class="ln" x="22" y="30" width="78" height="56" rx="6"/>
+          <text class="lbl" x="61" y="55" text-anchor="middle" style="fill:var(--ink)">load</text><text class="lbl" x="61" y="69" text-anchor="middle" style="fill:var(--ink)">generator</text>
+          <g class="ln" stroke-width="1.5"><path d="M104 40 L206 34"/><path d="M104 50 L206 46"/><path d="M104 58 L206 58"/><path d="M104 66 L206 70"/><path d="M104 76 L206 82"/></g>
+          <g class="dotc"><circle cx="140" cy="38" r="2.5"/><circle cx="170" cy="47" r="2.5"/><circle cx="125" cy="58" r="2.5"/><circle cx="185" cy="69" r="2.5"/><circle cx="150" cy="79" r="2.5"/></g>
+          <path class="soft" d="M214 30 H294 L284 94 H224 Z"/><path class="ln" d="M214 30 H294 L284 94 H224 Z"/><ellipse class="ln" cx="254" cy="30" rx="40" ry="7"/>
+          <text x="254" y="72" text-anchor="middle" style="font:700 20px var(--font-display);fill:var(--accent)">S3</text>
+          <text class="lbl" x="22" y="124">before</text><rect x="74" y="114" width="129" height="14" rx="2" fill="var(--line)"/><text class="lbl" x="210" y="125">40K TPS</text>
+          <text class="lbl" x="22" y="152">after</text><rect class="dotc" x="74" y="142" width="226" height="14" rx="2"/><text class="lbl" x="296" y="153" text-anchor="end" style="fill:var(--surface)">70K TPS</text>
+        </svg>
       </div>
     </div>
   </section>
