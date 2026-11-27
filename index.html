@@ -72,7 +72,7 @@ h1 .alt { display: block; font-weight: 400; font-size: .42em; letter-spacing: 0;
 .links span { color: var(--muted); }
 
 /* Section tabs: each part of the site is its own page */
-.tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px 26px; overflow-x: auto; scrollbar-width: none; background: var(--paper); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+.tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px 20px; overflow-x: auto; scrollbar-width: none; background: var(--paper); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; }
 .tabs::-webkit-scrollbar { display: none; }
 .tabs a { flex: none; padding: 14px 0 12px; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .tabs a:hover { color: var(--ink); }
@@ -217,7 +217,8 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
 
   <nav class="tabs" aria-label="Sections">
     <a href="#projects" data-tab="projects">Recent projects</a>
-    <a href="#experience" data-tab="experience">Experience</a>
+    <a href="#experience" data-tab="experience">Recent experience</a>
+    <a href="#more-experience" data-tab="more-experience">More experience</a>
     <a href="#more" data-tab="more">More projects</a>
     <a href="#education" data-tab="education">Education</a>
     <a href="#skills" data-tab="skills">Skills</a>
@@ -326,7 +327,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
 
     <div class="page" data-page="experience" hidden>
     <section id="work">
-      <h2>Experience</h2>
+      <h2>Recent experience</h2>
       <div class="entries">
         <div class="entry has-pic">
           <div class="when">2025 – Present</div>
@@ -369,6 +370,14 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
             <text x="266" y="80" text-anchor="middle" style="font:700 26px var(--font-display);fill:var(--accent)">40%</text><text class="lbl" x="266" y="98" text-anchor="middle">lower latency</text>
           </svg>
         </div>
+      </div>
+    </section>
+    </div>
+
+    <div class="page" data-page="more-experience" hidden>
+    <section id="more-work">
+      <h2>More experience</h2>
+      <div class="entries">
         <div class="entry has-pic">
           <div class="when">2022 – 2023</div>
           <div>
