@@ -61,7 +61,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
 
 /* Header */
-header { padding-block: 72px 40px; display: grid; gap: 18px; }
+header { padding-block: 72px 28px; display: grid; gap: 18px; }
 .kicker { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
 h1 { font-family: "EB Garamond", var(--font-body); font-size: clamp(36px, 7.5vw, 66px); font-weight: 500; line-height: 1.05; letter-spacing: -0.01em; }
 h1 .alt { display: block; font-weight: 400; font-size: .42em; letter-spacing: 0; color: var(--muted); margin-top: 10px; }
@@ -70,6 +70,15 @@ h1 .alt { display: block; font-weight: 400; font-size: .42em; letter-spacing: 0;
 .lede p { margin: 0; }
 .links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--font-mono); font-size: 13.5px; }
 .links span { color: var(--muted); }
+
+/* Section tabs: each part of the site is its own page */
+.tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px 26px; overflow-x: auto; scrollbar-width: none; background: var(--paper); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs a { flex: none; padding: 14px 0 12px; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tabs a:hover { color: var(--ink); }
+.tabs a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
+.page > section:first-child { border-top: 0; }
+.intro { padding-block: 36px 32px; }
 
 /* Sections */
 section { padding-block: 40px; border-top: 1px solid var(--line); display: grid; gap: 24px; }
@@ -196,11 +205,6 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
   <header>
     <p class="kicker">AI Engineer · Toronto</p>
     <h1>Bojing (Grace) Jiang</h1>
-    <div class="lede">
-      <p>I'm an AI engineer who turns models into products people use, from LLM agents to on-device computer vision.</p>
-      <p>I finished a Bachelor of Applied Science in Computer Engineering and a Certificate in Artificial Intelligence Engineering at the University of Toronto.</p>
-      <p>I'm finishing a Master of Science in Artificial Intelligence at Golden Gate University.</p>
-    </div>
     <div class="links">
       <span>grace.jiang.ai@gmail.com</span>
       <a href="https://linkedin.com/in/GraceJiang0312">LinkedIn</a>
@@ -208,294 +212,319 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     </div>
   </header>
 
-  <section id="recent">
-    <div class="section-head">
-      <h2>Recent projects · Stanford Probability for AI</h2>
-      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2">Course portfolio ↗</a>
-    </div>
-    <div class="carousel" aria-roledescription="carousel" aria-label="Stanford Probability for AI projects">
-    <div class="slides" id="slides">
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="1 of 5: Word Detective">
-      <span class="tag">2026 · Interactive tool</span>
-      <h3>Word Detective</h3>
-      <p>Which words give away AI-written text? Word Detective compares AI and human answers to the same questions and ranks the words whose chance of appearing differs most.</p>
-      <div class="stage" id="wd" aria-label="Bubble chart of the words most typical of AI answers"></div>
-      <div class="stats">
-        <div><b>116,536</b><span>answers compared</span></div>
-        <div><b>4</b><span>Q&amp;A styles</span></div>
-        <div><b>62×</b><span>"super" in AI vs human</span></div>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#about" data-tab="about">About</a>
+    <a href="#projects" data-tab="projects">Recent projects</a>
+    <a href="#experience" data-tab="experience">Experience</a>
+    <a href="#more" data-tab="more">More projects</a>
+  </nav>
+
+  <main>
+    <div class="page" data-page="about">
+      <section class="intro">
+        <div class="lede">
+          <p>I'm an AI engineer who turns models into products people use, from LLM agents to on-device computer vision.</p>
+          <p>I finished a Bachelor of Applied Science in Computer Engineering and a Certificate in Artificial Intelligence Engineering at the University of Toronto.</p>
+          <p>I'm finishing a Master of Science in Artificial Intelligence at Golden Gate University.</p>
+        </div>
+      </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="entries">
+        <div class="entry">
+          <div class="when">2026</div>
+          <div>
+            <h3>Stanford University, Probability for AI</h3>
+            <p class="role">Selected participant</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">2026</div>
+          <div>
+            <h3>Alexa She Builds Mentorship</h3>
+            <p class="role">Program selectee</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">2026 – Present</div>
+          <div>
+            <h3>Golden Gate University</h3>
+            <p class="role">MS, Artificial Intelligence (remote) · GPA 3.95 / 4.0</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">2019 – 2024</div>
+          <div>
+            <h3>University of Toronto</h3>
+            <p class="role">BASc, Computer Engineering · Dean's Honours List · Certificate in AI Engineering</p>
+          </div>
+        </div>
       </div>
-      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/ai-text">Open Word Detective ↗</a>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <dl class="skills">
+        <div><dt>Agents &amp; LLMs</dt><dd>AI agents, multi-agent systems, Google ADK, LangChain, LangGraph, RAG, prompt engineering</dd></div>
+        <div><dt>ML</dt><dd>PyTorch, TensorFlow, NLP, reinforcement learning</dd></div>
+        <div><dt>Cloud</dt><dd>AWS, GCP, Azure, Docker, CI/CD, GitHub Actions</dd></div>
+        <div><dt>Languages</dt><dd>Python, TypeScript, JavaScript, Java, C/C++, SQL</dd></div>
+      </dl>
+    </section>
     </div>
 
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="2 of 5: Inference Time Calculator">
-      <span class="tag">2026 · Interactive tool</span>
-      <h3>Inference Time Calculator</h3>
-      <p>How many copies of an AI model should try the same bug before one of them fixes it? Pick a number and run them.</p>
-      <div class="stage" id="itc" aria-label="Copies of a model trying a bug, and the chance at least one fixes it"></div>
-      <div class="controls">
-        <label for="itcN">Copies</label><input type="range" id="itcN" min="1" max="40" value="27"><output id="itcOut">27</output>
-        <button type="button" class="pill" id="itcRun">Run them</button>
+    <div class="page" data-page="projects" hidden>
+    <section id="recent">
+      <div class="section-head">
+        <h2>Recent projects · Stanford Probability for AI</h2>
+        <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2">Course portfolio ↗</a>
       </div>
-      <div class="stats">
-        <div><b>15.9%</b><span>one copy fixes it</span></div>
-        <div><b>27</b><span>copies for 99%</span></div>
-        <div><b>SWE-bench</b><span>real GitHub bugs</span></div>
+      <div class="carousel" aria-roledescription="carousel" aria-label="Stanford Probability for AI projects">
+      <div class="slides" id="slides">
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="1 of 5: Word Detective">
+        <span class="tag">2026 · Interactive tool</span>
+        <h3>Word Detective</h3>
+        <p>Which words give away AI-written text? Word Detective compares AI and human answers to the same questions and ranks the words whose chance of appearing differs most.</p>
+        <div class="stage" id="wd" aria-label="Bubble chart of the words most typical of AI answers"></div>
+        <div class="stats">
+          <div><b>116,536</b><span>answers compared</span></div>
+          <div><b>4</b><span>Q&amp;A styles</span></div>
+          <div><b>62×</b><span>"super" in AI vs human</span></div>
+        </div>
+        <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/ai-text">Open Word Detective ↗</a>
       </div>
-      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/inference-time">Open Inference Time Calculator ↗</a>
+
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="2 of 5: Inference Time Calculator">
+        <span class="tag">2026 · Interactive tool</span>
+        <h3>Inference Time Calculator</h3>
+        <p>How many copies of an AI model should try the same bug before one of them fixes it? Pick a number and run them.</p>
+        <div class="stage" id="itc" aria-label="Copies of a model trying a bug, and the chance at least one fixes it"></div>
+        <div class="controls">
+          <label for="itcN">Copies</label><input type="range" id="itcN" min="1" max="40" value="27"><output id="itcOut">27</output>
+          <button type="button" class="pill" id="itcRun">Run them</button>
+        </div>
+        <div class="stats">
+          <div><b>15.9%</b><span>one copy fixes it</span></div>
+          <div><b>27</b><span>copies for 99%</span></div>
+          <div><b>SWE-bench</b><span>real GitHub bugs</span></div>
+        </div>
+        <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/inference-time">Open Inference Time Calculator ↗</a>
+      </div>
+
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="3 of 5: Small Art Model">
+        <span class="tag">2026 · Generative model</span>
+        <h3>Small Art Model</h3>
+        <p>A short probabilistic story paints a city at night: random building heights, offices or apartments, and windows lit by chance. Every run is a new city.</p>
+        <div class="stage-wrap">
+          <div id="skyline" aria-label="A randomly generated city skyline at night"></div>
+          <button type="button" class="pill on-stage" id="resample">New city</button>
+        </div>
+        <div class="stats">
+          <div><b>24</b><span>buildings per city</span></div>
+          <div><b>4</b><span>probabilities set it all</span></div>
+          <div><b>1,200</b><span>buildings checked vs real</span></div>
+        </div>
+        <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/small-art-model">Open Small Art Model ↗</a>
+      </div>
+
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="4 of 5: The Hidden Chamber">
+        <span class="tag">2026 · Interactive tool</span>
+        <h3>The Hidden Chamber</h3>
+        <p>In 2017 physicists found a hidden room in the Great Pyramid by counting muons from space under it. The Hidden Chamber does the same in a pyramid of its own and finds the missing stone by maximum likelihood.</p>
+        <div class="stage" id="hc" aria-label="Muons falling through a pyramid onto a counting plate, and the counts per minute against a Poisson model"></div>
+        <div class="stats">
+          <div><b>60</b><span>one-minute counts</span></div>
+          <div><b>20 m</b><span>of stone missing</span></div>
+          <div><b>570×</b><span>likelier than solid stone</span></div>
+        </div>
+        <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/hidden-chamber">Open The Hidden Chamber ↗</a>
+      </div>
+
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="5 of 5: Rewrite GPT-2">
+        <span class="tag">2026 · Model editing</span>
+        <h3>Rewrite GPT-2</h3>
+        <p>Where does GPT-2 keep the fact that the Louvre is in Paris? Rewrite GPT-2 finds it, then edits one row of the model so it believes Rome.</p>
+        <div class="stage-wrap">
+          <div id="gpt" aria-label="GPT-2 layers over the sentence The Louvre is located in the city of, with its next-word guesses"></div>
+          <div class="toggle on-stage" id="gptToggle" role="group" aria-label="Show GPT-2 before or after the rewrite">
+            <button type="button" data-s="0" aria-pressed="true">Before</button><button type="button" data-s="1" aria-pressed="false">After</button>
+          </div>
+        </div>
+        <div class="stats">
+          <div><b>768</b><span>of 124M parameters changed</span></div>
+          <div><b>4</b><span>training sentences</span></div>
+          <div><b>4 / 4</b><span>goals held on new sentences</span></div>
+        </div>
+        <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/rewrite-gpt2">Open Rewrite GPT-2 ↗</a>
+      </div>
+      </div>
+      <div class="carousel-nav">
+        <button type="button" class="arrow" id="prev" aria-label="Previous project">←</button>
+        <div class="dots" id="dots">
+          <button type="button" class="dot" aria-label="Show Word Detective"></button>
+          <button type="button" class="dot" aria-label="Show Inference Time Calculator"></button>
+          <button type="button" class="dot" aria-label="Show Small Art Model"></button>
+          <button type="button" class="dot" aria-label="Show The Hidden Chamber"></button>
+          <button type="button" class="dot" aria-label="Show Rewrite GPT-2"></button>
+        </div>
+        <button type="button" class="arrow" id="next" aria-label="Next project">→</button>
+      </div>
+      </div>
+    </section>
     </div>
 
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="3 of 5: Small Art Model">
-      <span class="tag">2026 · Generative model</span>
-      <h3>Small Art Model</h3>
-      <p>A short probabilistic story paints a city at night: random building heights, offices or apartments, and windows lit by chance. Every run is a new city.</p>
-      <div class="stage-wrap">
-        <div id="skyline" aria-label="A randomly generated city skyline at night"></div>
-        <button type="button" class="pill on-stage" id="resample">New city</button>
+    <div class="page" data-page="experience" hidden>
+    <section id="work">
+      <h2>Experience</h2>
+      <div class="entries">
+        <div class="entry has-pic">
+          <div class="when">2025 – Present</div>
+          <div>
+            <h3>Matrix Labs</h3>
+            <p class="role">AI Engineer · Toronto</p>
+            <ul>
+              <li>Worked on <a href="https://agent-launcher-homepage.whitematrix.workers.dev/en">Agent Launcher</a>, a desktop app that wraps coding-agent CLIs (Claude Code, Codex, Gemini CLI, and others) so people who don't use the terminal can install and run them in one click.</li>
+              <li>Added Google's Gemini CLI as a supported agent and fixed how its sessions are saved and resumed.</li>
+              <li>Designed quantitative trading strategies with Bayesian hyperparameter optimization (10.48% backtest return) for agents on World3's AI agent platform.</li>
+            </ul>
+          </div>
+          <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="Agent Launcher window listing Claude Code, Codex and Gemini CLI, each with a one-click Run button">
+            <rect class="soft" x="20" y="12" width="280" height="156" rx="8"/><rect class="ln" x="20" y="12" width="280" height="156" rx="8"/>
+            <path class="ln" d="M20 34 H300"/><g class="dotc"><circle cx="34" cy="23" r="3"/><circle cx="45" cy="23" r="3"/><circle cx="56" cy="23" r="3"/></g>
+            <text class="lbl" x="160" y="27" text-anchor="middle">Agent Launcher</text>
+            <g><rect x="34" y="46" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--line)"/><circle class="dotc" cx="52" cy="62" r="7"/><text class="lbl" x="68" y="66" style="fill:var(--ink)">Claude Code</text><rect class="dotc" x="236" y="53" width="40" height="18" rx="9"/><text class="lbl" x="256" y="66" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
+            <g><rect x="34" y="84" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--line)"/><circle class="dotc" cx="52" cy="100" r="7"/><text class="lbl" x="68" y="104" style="fill:var(--ink)">Codex</text><rect class="dotc" x="236" y="91" width="40" height="18" rx="9"/><text class="lbl" x="256" y="104" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
+            <g><rect x="34" y="122" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--mark)" stroke-width="2"/><circle class="mk" cx="52" cy="138" r="7"/><text class="lbl" x="68" y="142" style="fill:var(--ink)">Gemini CLI</text><text class="lbl" x="150" y="142" style="fill:var(--mark)">added</text><rect class="dotc" x="236" y="129" width="40" height="18" rx="9"/><text class="lbl" x="256" y="142" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
+          </svg>
+        </div>
+        <div class="entry has-pic">
+          <div class="when">2024 – 2024</div>
+          <div>
+            <h3>PRE AI</h3>
+            <p class="role">AI Engineer · Toronto</p>
+            <ul>
+              <li>Designed an AI makeup and outfit recommendation app that pairs an image classifier with LLM prompting to turn user photos into tailored suggestions.</li>
+              <li>Ran a human evaluation to choose a more cost-efficient model tier: 94% lower API cost and 40% lower latency at the same quality bar.</li>
+            </ul>
+          </div>
+          <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="Phone showing a face photo turned into makeup colour suggestions">
+            <rect class="soft" x="106" y="10" width="108" height="160" rx="14"/><rect class="ln" x="106" y="10" width="108" height="160" rx="14"/>
+            <path class="ln" d="M148 20 H172"/>
+            <ellipse class="ln" cx="160" cy="62" rx="20" ry="26"/><circle class="dotc" cx="152" cy="58" r="2"/><circle class="dotc" cx="168" cy="58" r="2"/><path d="M152 74 Q160 79 168 74" fill="none" stroke="var(--mark)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="132" cy="110" r="9" fill="#c2566e"/><circle cx="160" cy="110" r="9" fill="#e0917a"/><circle cx="188" cy="110" r="9" fill="#9a4a6a"/>
+            <rect x="114" y="126" width="92" height="16" rx="7" fill="var(--surface)" stroke="var(--line)"/><text class="lbl" x="160" y="138" text-anchor="middle" style="fill:var(--ink)">rose · coral</text>
+            <rect x="114" y="147" width="92" height="16" rx="7" fill="var(--surface)" stroke="var(--line)"/><text class="lbl" x="160" y="159" text-anchor="middle" style="fill:var(--ink)">linen blazer</text>
+            <text x="54" y="80" text-anchor="middle" style="font:700 26px var(--font-display);fill:var(--accent)">94%</text><text class="lbl" x="54" y="98" text-anchor="middle">lower API cost</text>
+            <text x="266" y="80" text-anchor="middle" style="font:700 26px var(--font-display);fill:var(--accent)">40%</text><text class="lbl" x="266" y="98" text-anchor="middle">lower latency</text>
+          </svg>
+        </div>
+        <div class="entry has-pic">
+          <div class="when">2022 – 2023</div>
+          <div>
+            <h3>Bank of Montreal</h3>
+            <p class="role">Software Developer, Co-op · Toronto</p>
+            <ul>
+              <li>Trained LSTM models for text entity extraction: accuracy went from 80% to 96% on structured documents and from 70% to 92% on semi-structured ones.</li>
+              <li>Added visual question answering for semi-structured documents, choosing the best method per document type.</li>
+            </ul>
+          </div>
+          <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="A document with extracted fields highlighted, and accuracy rising from 80 to 96 percent and from 70 to 92 percent">
+            <rect x="22" y="14" width="104" height="152" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+            <g class="ln" stroke-width="1.5" stroke="var(--line)"><path d="M34 34 H90"/><path d="M34 60 H114"/><path d="M34 74 H100"/><path d="M34 100 H114"/><path d="M34 114 H84"/><path d="M34 140 H108"/></g>
+            <rect class="soft" x="30" y="26" width="64" height="15" rx="2" stroke="var(--accent)"/><rect x="30" y="92" width="58" height="15" rx="2" fill="none" stroke="var(--mark)" stroke-width="2"/><rect class="soft" x="30" y="132" width="50" height="15" rx="2" stroke="var(--accent)"/>
+            <path class="ln" d="M134 90 H150 M144 84 L150 90 L144 96"/>
+            <text class="lbl" x="160" y="50">structured</text>
+            <rect x="160" y="58" width="96" height="11" rx="2" fill="var(--line)"/><text class="lbl" x="262" y="67">80%</text>
+            <rect class="dotc" x="160" y="73" width="115" height="11" rx="2"/><text class="lbl" x="281" y="82" style="fill:var(--accent)">96%</text>
+            <text class="lbl" x="160" y="112">semi-structured</text>
+            <rect x="160" y="120" width="84" height="11" rx="2" fill="var(--line)"/><text class="lbl" x="250" y="129">70%</text>
+            <rect class="dotc" x="160" y="135" width="110" height="11" rx="2"/><text class="lbl" x="276" y="144" style="fill:var(--accent)">92%</text>
+          </svg>
+        </div>
+        <div class="entry has-pic">
+          <div class="when">2022 – 2022</div>
+          <div>
+            <h3>Amazon</h3>
+            <p class="role">Software Development Engineer, Intern · Vancouver</p>
+            <ul>
+              <li>Redesigned the S3 load generator's networking and threading from blocking to non-blocking, raising throughput from 40K to 70K TPS.</li>
+              <li>Halved the hosts needed per test scenario, my part of the team's continuous load-testing effort, saving about $231K per month.</li>
+            </ul>
+          </div>
+          <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="A load generator sending many requests to an S3 bucket, throughput rising from 40K to 70K per second">
+            <rect class="soft" x="22" y="30" width="78" height="56" rx="6"/><rect class="ln" x="22" y="30" width="78" height="56" rx="6"/>
+            <text class="lbl" x="61" y="55" text-anchor="middle" style="fill:var(--ink)">load</text><text class="lbl" x="61" y="69" text-anchor="middle" style="fill:var(--ink)">generator</text>
+            <g class="ln" stroke-width="1.5"><path d="M104 40 L206 34"/><path d="M104 50 L206 46"/><path d="M104 58 L206 58"/><path d="M104 66 L206 70"/><path d="M104 76 L206 82"/></g>
+            <g class="dotc"><circle cx="140" cy="38" r="2.5"/><circle cx="170" cy="47" r="2.5"/><circle cx="125" cy="58" r="2.5"/><circle cx="185" cy="69" r="2.5"/><circle cx="150" cy="79" r="2.5"/></g>
+            <path class="soft" d="M214 30 H294 L284 94 H224 Z"/><path class="ln" d="M214 30 H294 L284 94 H224 Z"/><ellipse class="ln" cx="254" cy="30" rx="40" ry="7"/>
+            <text x="254" y="72" text-anchor="middle" style="font:700 20px var(--font-display);fill:var(--accent)">S3</text>
+            <text class="lbl" x="22" y="124">before</text><rect x="74" y="114" width="129" height="14" rx="2" fill="var(--line)"/><text class="lbl" x="210" y="125">40K TPS</text>
+            <text class="lbl" x="22" y="152">after</text><rect class="dotc" x="74" y="142" width="226" height="14" rx="2"/><text class="lbl" x="296" y="153" text-anchor="end" style="fill:var(--surface)">70K TPS</text>
+          </svg>
+        </div>
       </div>
-      <div class="stats">
-        <div><b>24</b><span>buildings per city</span></div>
-        <div><b>4</b><span>probabilities set it all</span></div>
-        <div><b>1,200</b><span>buildings checked vs real</span></div>
-      </div>
-      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/small-art-model">Open Small Art Model ↗</a>
+    </section>
     </div>
 
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="4 of 5: The Hidden Chamber">
-      <span class="tag">2026 · Interactive tool</span>
-      <h3>The Hidden Chamber</h3>
-      <p>In 2017 physicists found a hidden room in the Great Pyramid by counting muons from space under it. The Hidden Chamber does the same in a pyramid of its own and finds the missing stone by maximum likelihood.</p>
-      <div class="stage" id="hc" aria-label="Muons falling through a pyramid onto a counting plate, and the counts per minute against a Poisson model"></div>
-      <div class="stats">
-        <div><b>60</b><span>one-minute counts</span></div>
-        <div><b>20 m</b><span>of stone missing</span></div>
-        <div><b>570×</b><span>likelier than solid stone</span></div>
+    <div class="page" data-page="more" hidden>
+    <section id="more-projects">
+      <h2>More projects</h2>
+      <div class="projects">
+        <div class="proj">
+          <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Face outline with tracked landmark points inside a detection box">
+            <rect class="soft" x="110" y="22" width="100" height="136" rx="4"/>
+            <rect class="ln" x="110" y="22" width="100" height="136" rx="4" stroke-dasharray="6 5"/>
+            <ellipse class="ln" cx="160" cy="90" rx="38" ry="50"/>
+            <g class="dotc"><circle cx="145" cy="78" r="3"/><circle cx="175" cy="78" r="3"/><circle cx="160" cy="95" r="3"/><circle cx="148" cy="114" r="2.5"/><circle cx="160" cy="117" r="2.5"/><circle cx="172" cy="114" r="2.5"/><circle cx="136" cy="70" r="2"/><circle cx="184" cy="70" r="2"/><circle cx="125" cy="98" r="2"/><circle cx="195" cy="98" r="2"/><circle cx="160" cy="138" r="2"/></g>
+            <path class="ln" d="M148 114 Q160 124 172 114" stroke="var(--mark)"/>
+            <text class="lbl" x="98" y="94" text-anchor="end">45 fps</text><text class="lbl" x="222" y="94">22 ms</text>
+          </svg>
+          <h3>Real-Time Face Tracking</h3>
+          <p class="src">ModiFace · Capstone</p>
+          <p>Pruned and quantized face-tracking models for on-device use: 25 → 45 fps, 40 → 22 ms latency. The tracking underpins L'Oréal's virtual makeup try-on.</p>
+        </div>
+        <div class="proj">
+          <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Race track loop with a dashed center line and a car following it">
+            <path class="soft" d="M70 40 H250 A50 50 0 0 1 250 140 H70 A50 50 0 0 1 70 40 Z M90 70 H230 A20 20 0 0 1 230 110 H90 A20 20 0 0 1 90 70 Z" fill-rule="evenodd"/>
+            <path class="ln" d="M70 40 H250 A50 50 0 0 1 250 140 H70 A50 50 0 0 1 70 40 Z"/>
+            <path class="ln" d="M90 70 H230 A20 20 0 0 1 230 110 H90 A20 20 0 0 1 90 70 Z"/>
+            <path class="ln" d="M80 55 H240 A35 35 0 0 1 240 125 H80 A35 35 0 0 1 80 55 Z" stroke="var(--mark)" stroke-dasharray="5 7" stroke-width="1.5"/>
+            <rect class="dotc" x="150" y="48" width="22" height="14" rx="4"/>
+            <text class="lbl" x="160" y="166" text-anchor="middle">6th of 140 · Canada</text>
+          </svg>
+          <h3>Autonomous Racing</h3>
+          <p class="src">AWS DeepRacer</p>
+          <p>PPO agent with reward shaping for center-line tracking. Ranked 6th of 140 in Canada and 42nd of 1,296 in North America.</p>
+        </div>
+        <div class="proj">
+          <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="A root agent routing to a researcher agent and a formatter agent that share session state">
+            <path class="ln" d="M160 56 L95 104 M160 56 L225 104"/>
+            <path class="ln" d="M125 126 H195" stroke="var(--mark)" stroke-dasharray="4 5"/>
+            <rect class="soft" x="115" y="24" width="90" height="34" rx="17"/><rect class="ln" x="115" y="24" width="90" height="34" rx="17"/>
+            <rect class="soft" x="40" y="106" width="100" height="34" rx="17"/><rect class="ln" x="40" y="106" width="100" height="34" rx="17"/>
+            <rect class="soft" x="180" y="106" width="100" height="34" rx="17"/><rect class="ln" x="180" y="106" width="100" height="34" rx="17"/>
+            <text class="lbl" x="160" y="45" text-anchor="middle" style="fill:var(--ink)">root</text>
+            <text class="lbl" x="90" y="127" text-anchor="middle" style="fill:var(--ink)">researcher</text>
+            <text class="lbl" x="230" y="127" text-anchor="middle" style="fill:var(--ink)">formatter</text>
+            <text class="lbl" x="160" y="164" text-anchor="middle">shared session state</text>
+          </svg>
+          <h3>Zoo Tour Guide Agents</h3>
+          <p class="src">Google ADK · Cloud Run</p>
+          <p>A root agent routes questions to a researcher agent and a formatter agent that share session state, running on Gemini through Vertex AI.</p>
+        </div>
+        <div class="proj">
+          <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Five letter tiles of a word-guessing game">
+            <rect class="dotc" x="40" y="69" width="42" height="42" rx="4"/><text class="tile" x="61" y="98" style="fill:var(--surface)">P</text><rect class="soft" x="90" y="69" width="42" height="42" rx="4"/><text class="tile" x="111" y="98">O</text><rect class="mk" x="140" y="69" width="42" height="42" rx="4"/><text class="tile" x="161" y="98">S</text><rect class="soft" x="190" y="69" width="42" height="42" rx="4"/><text class="tile" x="211" y="98">T</text><rect class="dotc" x="240" y="69" width="42" height="42" rx="4"/><text class="tile" x="261" y="98" style="fill:var(--surface)">C</text>
+          </svg>
+          <h3>Postcard Puzzler</h3>
+          <p class="src">Web game</p>
+          <p>A daily five-letter word-guessing game with a category and a clue for each day's word.</p>
+        </div>
       </div>
-      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/hidden-chamber">Open The Hidden Chamber ↗</a>
+    </section>
     </div>
-
-    <div class="feature" role="group" aria-roledescription="slide" aria-label="5 of 5: Rewrite GPT-2">
-      <span class="tag">2026 · Model editing</span>
-      <h3>Rewrite GPT-2</h3>
-      <p>Where does GPT-2 keep the fact that the Louvre is in Paris? Rewrite GPT-2 finds it, then edits one row of the model so it believes Rome.</p>
-      <div class="stage-wrap">
-        <div id="gpt" aria-label="GPT-2 layers over the sentence The Louvre is located in the city of, with its next-word guesses"></div>
-        <div class="toggle on-stage" id="gptToggle" role="group" aria-label="Show GPT-2 before or after the rewrite">
-          <button type="button" data-s="0" aria-pressed="true">Before</button><button type="button" data-s="1" aria-pressed="false">After</button>
-        </div>
-      </div>
-      <div class="stats">
-        <div><b>768</b><span>of 124M parameters changed</span></div>
-        <div><b>4</b><span>training sentences</span></div>
-        <div><b>4 / 4</b><span>goals held on new sentences</span></div>
-      </div>
-      <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/rewrite-gpt2">Open Rewrite GPT-2 ↗</a>
-    </div>
-    </div>
-    <div class="carousel-nav">
-      <button type="button" class="arrow" id="prev" aria-label="Previous project">←</button>
-      <div class="dots" id="dots">
-        <button type="button" class="dot" aria-label="Show Word Detective"></button>
-        <button type="button" class="dot" aria-label="Show Inference Time Calculator"></button>
-        <button type="button" class="dot" aria-label="Show Small Art Model"></button>
-        <button type="button" class="dot" aria-label="Show The Hidden Chamber"></button>
-        <button type="button" class="dot" aria-label="Show Rewrite GPT-2"></button>
-      </div>
-      <button type="button" class="arrow" id="next" aria-label="Next project">→</button>
-    </div>
-    </div>
-  </section>
-
-  <section id="work">
-    <h2>Experience</h2>
-    <div class="entries">
-      <div class="entry has-pic">
-        <div class="when">2025 – Present</div>
-        <div>
-          <h3>Matrix Labs</h3>
-          <p class="role">AI Engineer · Toronto</p>
-          <ul>
-            <li>Worked on <a href="https://agent-launcher-homepage.whitematrix.workers.dev/en">Agent Launcher</a>, a desktop app that wraps coding-agent CLIs (Claude Code, Codex, Gemini CLI, and others) so people who don't use the terminal can install and run them in one click.</li>
-            <li>Added Google's Gemini CLI as a supported agent and fixed how its sessions are saved and resumed.</li>
-            <li>Designed quantitative trading strategies with Bayesian hyperparameter optimization (10.48% backtest return) for agents on World3's AI agent platform.</li>
-          </ul>
-        </div>
-        <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="Agent Launcher window listing Claude Code, Codex and Gemini CLI, each with a one-click Run button">
-          <rect class="soft" x="20" y="12" width="280" height="156" rx="8"/><rect class="ln" x="20" y="12" width="280" height="156" rx="8"/>
-          <path class="ln" d="M20 34 H300"/><g class="dotc"><circle cx="34" cy="23" r="3"/><circle cx="45" cy="23" r="3"/><circle cx="56" cy="23" r="3"/></g>
-          <text class="lbl" x="160" y="27" text-anchor="middle">Agent Launcher</text>
-          <g><rect x="34" y="46" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--line)"/><circle class="dotc" cx="52" cy="62" r="7"/><text class="lbl" x="68" y="66" style="fill:var(--ink)">Claude Code</text><rect class="dotc" x="236" y="53" width="40" height="18" rx="9"/><text class="lbl" x="256" y="66" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
-          <g><rect x="34" y="84" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--line)"/><circle class="dotc" cx="52" cy="100" r="7"/><text class="lbl" x="68" y="104" style="fill:var(--ink)">Codex</text><rect class="dotc" x="236" y="91" width="40" height="18" rx="9"/><text class="lbl" x="256" y="104" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
-          <g><rect x="34" y="122" width="252" height="32" rx="6" fill="var(--surface)" stroke="var(--mark)" stroke-width="2"/><circle class="mk" cx="52" cy="138" r="7"/><text class="lbl" x="68" y="142" style="fill:var(--ink)">Gemini CLI</text><text class="lbl" x="150" y="142" style="fill:var(--mark)">added</text><rect class="dotc" x="236" y="129" width="40" height="18" rx="9"/><text class="lbl" x="256" y="142" text-anchor="middle" style="fill:var(--surface)">Run</text></g>
-        </svg>
-      </div>
-      <div class="entry has-pic">
-        <div class="when">2024 – 2024</div>
-        <div>
-          <h3>PRE AI</h3>
-          <p class="role">AI Engineer · Toronto</p>
-          <ul>
-            <li>Designed an AI makeup and outfit recommendation app that pairs an image classifier with LLM prompting to turn user photos into tailored suggestions.</li>
-            <li>Ran a human evaluation to choose a more cost-efficient model tier: 94% lower API cost and 40% lower latency at the same quality bar.</li>
-          </ul>
-        </div>
-        <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="Phone showing a face photo turned into makeup colour suggestions">
-          <rect class="soft" x="106" y="10" width="108" height="160" rx="14"/><rect class="ln" x="106" y="10" width="108" height="160" rx="14"/>
-          <path class="ln" d="M148 20 H172"/>
-          <ellipse class="ln" cx="160" cy="62" rx="20" ry="26"/><circle class="dotc" cx="152" cy="58" r="2"/><circle class="dotc" cx="168" cy="58" r="2"/><path d="M152 74 Q160 79 168 74" fill="none" stroke="var(--mark)" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="132" cy="110" r="9" fill="#c2566e"/><circle cx="160" cy="110" r="9" fill="#e0917a"/><circle cx="188" cy="110" r="9" fill="#9a4a6a"/>
-          <rect x="114" y="126" width="92" height="16" rx="7" fill="var(--surface)" stroke="var(--line)"/><text class="lbl" x="160" y="138" text-anchor="middle" style="fill:var(--ink)">rose · coral</text>
-          <rect x="114" y="147" width="92" height="16" rx="7" fill="var(--surface)" stroke="var(--line)"/><text class="lbl" x="160" y="159" text-anchor="middle" style="fill:var(--ink)">linen blazer</text>
-          <text x="54" y="80" text-anchor="middle" style="font:700 26px var(--font-display);fill:var(--accent)">94%</text><text class="lbl" x="54" y="98" text-anchor="middle">lower API cost</text>
-          <text x="266" y="80" text-anchor="middle" style="font:700 26px var(--font-display);fill:var(--accent)">40%</text><text class="lbl" x="266" y="98" text-anchor="middle">lower latency</text>
-        </svg>
-      </div>
-      <div class="entry has-pic">
-        <div class="when">2022 – 2023</div>
-        <div>
-          <h3>Bank of Montreal</h3>
-          <p class="role">Software Developer, Co-op · Toronto</p>
-          <ul>
-            <li>Trained LSTM models for text entity extraction: accuracy went from 80% to 96% on structured documents and from 70% to 92% on semi-structured ones.</li>
-            <li>Added visual question answering for semi-structured documents, choosing the best method per document type.</li>
-          </ul>
-        </div>
-        <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="A document with extracted fields highlighted, and accuracy rising from 80 to 96 percent and from 70 to 92 percent">
-          <rect x="22" y="14" width="104" height="152" rx="4" fill="var(--surface)" stroke="var(--line)"/>
-          <g class="ln" stroke-width="1.5" stroke="var(--line)"><path d="M34 34 H90"/><path d="M34 60 H114"/><path d="M34 74 H100"/><path d="M34 100 H114"/><path d="M34 114 H84"/><path d="M34 140 H108"/></g>
-          <rect class="soft" x="30" y="26" width="64" height="15" rx="2" stroke="var(--accent)"/><rect x="30" y="92" width="58" height="15" rx="2" fill="none" stroke="var(--mark)" stroke-width="2"/><rect class="soft" x="30" y="132" width="50" height="15" rx="2" stroke="var(--accent)"/>
-          <path class="ln" d="M134 90 H150 M144 84 L150 90 L144 96"/>
-          <text class="lbl" x="160" y="50">structured</text>
-          <rect x="160" y="58" width="96" height="11" rx="2" fill="var(--line)"/><text class="lbl" x="262" y="67">80%</text>
-          <rect class="dotc" x="160" y="73" width="115" height="11" rx="2"/><text class="lbl" x="281" y="82" style="fill:var(--accent)">96%</text>
-          <text class="lbl" x="160" y="112">semi-structured</text>
-          <rect x="160" y="120" width="84" height="11" rx="2" fill="var(--line)"/><text class="lbl" x="250" y="129">70%</text>
-          <rect class="dotc" x="160" y="135" width="110" height="11" rx="2"/><text class="lbl" x="276" y="144" style="fill:var(--accent)">92%</text>
-        </svg>
-      </div>
-      <div class="entry has-pic">
-        <div class="when">2022 – 2022</div>
-        <div>
-          <h3>Amazon</h3>
-          <p class="role">Software Development Engineer, Intern · Vancouver</p>
-          <ul>
-            <li>Redesigned the S3 load generator's networking and threading from blocking to non-blocking, raising throughput from 40K to 70K TPS.</li>
-            <li>Halved the hosts needed per test scenario, my part of the team's continuous load-testing effort, saving about $231K per month.</li>
-          </ul>
-        </div>
-        <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="A load generator sending many requests to an S3 bucket, throughput rising from 40K to 70K per second">
-          <rect class="soft" x="22" y="30" width="78" height="56" rx="6"/><rect class="ln" x="22" y="30" width="78" height="56" rx="6"/>
-          <text class="lbl" x="61" y="55" text-anchor="middle" style="fill:var(--ink)">load</text><text class="lbl" x="61" y="69" text-anchor="middle" style="fill:var(--ink)">generator</text>
-          <g class="ln" stroke-width="1.5"><path d="M104 40 L206 34"/><path d="M104 50 L206 46"/><path d="M104 58 L206 58"/><path d="M104 66 L206 70"/><path d="M104 76 L206 82"/></g>
-          <g class="dotc"><circle cx="140" cy="38" r="2.5"/><circle cx="170" cy="47" r="2.5"/><circle cx="125" cy="58" r="2.5"/><circle cx="185" cy="69" r="2.5"/><circle cx="150" cy="79" r="2.5"/></g>
-          <path class="soft" d="M214 30 H294 L284 94 H224 Z"/><path class="ln" d="M214 30 H294 L284 94 H224 Z"/><ellipse class="ln" cx="254" cy="30" rx="40" ry="7"/>
-          <text x="254" y="72" text-anchor="middle" style="font:700 20px var(--font-display);fill:var(--accent)">S3</text>
-          <text class="lbl" x="22" y="124">before</text><rect x="74" y="114" width="129" height="14" rx="2" fill="var(--line)"/><text class="lbl" x="210" y="125">40K TPS</text>
-          <text class="lbl" x="22" y="152">after</text><rect class="dotc" x="74" y="142" width="226" height="14" rx="2"/><text class="lbl" x="296" y="153" text-anchor="end" style="fill:var(--surface)">70K TPS</text>
-        </svg>
-      </div>
-    </div>
-  </section>
-
-  <section id="education">
-    <h2>Education</h2>
-    <div class="entries">
-      <div class="entry">
-        <div class="when">2026</div>
-        <div>
-          <h3>Stanford University, Probability for AI</h3>
-          <p class="role">Selected participant</p>
-        </div>
-      </div>
-      <div class="entry">
-        <div class="when">2026</div>
-        <div>
-          <h3>Alexa She Builds Mentorship</h3>
-          <p class="role">Program selectee</p>
-        </div>
-      </div>
-      <div class="entry">
-        <div class="when">2026 – Present</div>
-        <div>
-          <h3>Golden Gate University</h3>
-          <p class="role">MS, Artificial Intelligence (remote) · GPA 3.95 / 4.0</p>
-        </div>
-      </div>
-      <div class="entry">
-        <div class="when">2019 – 2024</div>
-        <div>
-          <h3>University of Toronto</h3>
-          <p class="role">BASc, Computer Engineering · Dean's Honours List · Certificate in AI Engineering</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2>More projects</h2>
-    <div class="projects">
-      <div class="proj">
-        <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Face outline with tracked landmark points inside a detection box">
-          <rect class="soft" x="110" y="22" width="100" height="136" rx="4"/>
-          <rect class="ln" x="110" y="22" width="100" height="136" rx="4" stroke-dasharray="6 5"/>
-          <ellipse class="ln" cx="160" cy="90" rx="38" ry="50"/>
-          <g class="dotc"><circle cx="145" cy="78" r="3"/><circle cx="175" cy="78" r="3"/><circle cx="160" cy="95" r="3"/><circle cx="148" cy="114" r="2.5"/><circle cx="160" cy="117" r="2.5"/><circle cx="172" cy="114" r="2.5"/><circle cx="136" cy="70" r="2"/><circle cx="184" cy="70" r="2"/><circle cx="125" cy="98" r="2"/><circle cx="195" cy="98" r="2"/><circle cx="160" cy="138" r="2"/></g>
-          <path class="ln" d="M148 114 Q160 124 172 114" stroke="var(--mark)"/>
-          <text class="lbl" x="98" y="94" text-anchor="end">45 fps</text><text class="lbl" x="222" y="94">22 ms</text>
-        </svg>
-        <h3>Real-Time Face Tracking</h3>
-        <p class="src">ModiFace · Capstone</p>
-        <p>Pruned and quantized face-tracking models for on-device use: 25 → 45 fps, 40 → 22 ms latency. The tracking underpins L'Oréal's virtual makeup try-on.</p>
-      </div>
-      <div class="proj">
-        <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Race track loop with a dashed center line and a car following it">
-          <path class="soft" d="M70 40 H250 A50 50 0 0 1 250 140 H70 A50 50 0 0 1 70 40 Z M90 70 H230 A20 20 0 0 1 230 110 H90 A20 20 0 0 1 90 70 Z" fill-rule="evenodd"/>
-          <path class="ln" d="M70 40 H250 A50 50 0 0 1 250 140 H70 A50 50 0 0 1 70 40 Z"/>
-          <path class="ln" d="M90 70 H230 A20 20 0 0 1 230 110 H90 A20 20 0 0 1 90 70 Z"/>
-          <path class="ln" d="M80 55 H240 A35 35 0 0 1 240 125 H80 A35 35 0 0 1 80 55 Z" stroke="var(--mark)" stroke-dasharray="5 7" stroke-width="1.5"/>
-          <rect class="dotc" x="150" y="48" width="22" height="14" rx="4"/>
-          <text class="lbl" x="160" y="166" text-anchor="middle">6th of 140 · Canada</text>
-        </svg>
-        <h3>Autonomous Racing</h3>
-        <p class="src">AWS DeepRacer</p>
-        <p>PPO agent with reward shaping for center-line tracking. Ranked 6th of 140 in Canada and 42nd of 1,296 in North America.</p>
-      </div>
-      <div class="proj">
-        <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="A root agent routing to a researcher agent and a formatter agent that share session state">
-          <path class="ln" d="M160 56 L95 104 M160 56 L225 104"/>
-          <path class="ln" d="M125 126 H195" stroke="var(--mark)" stroke-dasharray="4 5"/>
-          <rect class="soft" x="115" y="24" width="90" height="34" rx="17"/><rect class="ln" x="115" y="24" width="90" height="34" rx="17"/>
-          <rect class="soft" x="40" y="106" width="100" height="34" rx="17"/><rect class="ln" x="40" y="106" width="100" height="34" rx="17"/>
-          <rect class="soft" x="180" y="106" width="100" height="34" rx="17"/><rect class="ln" x="180" y="106" width="100" height="34" rx="17"/>
-          <text class="lbl" x="160" y="45" text-anchor="middle" style="fill:var(--ink)">root</text>
-          <text class="lbl" x="90" y="127" text-anchor="middle" style="fill:var(--ink)">researcher</text>
-          <text class="lbl" x="230" y="127" text-anchor="middle" style="fill:var(--ink)">formatter</text>
-          <text class="lbl" x="160" y="164" text-anchor="middle">shared session state</text>
-        </svg>
-        <h3>Zoo Tour Guide Agents</h3>
-        <p class="src">Google ADK · Cloud Run</p>
-        <p>A root agent routes questions to a researcher agent and a formatter agent that share session state, running on Gemini through Vertex AI.</p>
-      </div>
-      <div class="proj">
-        <svg class="thumb" viewBox="0 0 320 180" role="img" aria-label="Five letter tiles of a word-guessing game">
-          <rect class="dotc" x="40" y="69" width="42" height="42" rx="4"/><text class="tile" x="61" y="98" style="fill:var(--surface)">P</text><rect class="soft" x="90" y="69" width="42" height="42" rx="4"/><text class="tile" x="111" y="98">O</text><rect class="mk" x="140" y="69" width="42" height="42" rx="4"/><text class="tile" x="161" y="98">S</text><rect class="soft" x="190" y="69" width="42" height="42" rx="4"/><text class="tile" x="211" y="98">T</text><rect class="dotc" x="240" y="69" width="42" height="42" rx="4"/><text class="tile" x="261" y="98" style="fill:var(--surface)">C</text>
-        </svg>
-        <h3>Postcard Puzzler</h3>
-        <p class="src">Web game</p>
-        <p>A daily five-letter word-guessing game with a category and a clue for each day's word.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="skills">
-    <h2>Skills</h2>
-    <dl class="skills">
-      <div><dt>Agents &amp; LLMs</dt><dd>AI agents, multi-agent systems, Google ADK, LangChain, LangGraph, RAG, prompt engineering</dd></div>
-      <div><dt>ML</dt><dd>PyTorch, TensorFlow, NLP, reinforcement learning</dd></div>
-      <div><dt>Cloud</dt><dd>AWS, GCP, Azure, Docker, CI/CD, GitHub Actions</dd></div>
-      <div><dt>Languages</dt><dd>Python, TypeScript, JavaScript, Java, C/C++, SQL</dd></div>
-    </dl>
-  </section>
+  </main>
 
   <footer>© 2026 Bojing (Grace) Jiang</footer>
 </div>
@@ -766,6 +795,27 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
   if ("ResizeObserver" in window) { const ro = new ResizeObserver(() => mark()); panels.forEach((p) => ro.observe(p)); }
   window.carouselReady = true;
   mark();
+
+  // Section tabs: show one page at a time, chosen by the URL hash (#about, #projects, #experience, #more)
+  (() => {
+    const pages = [...document.querySelectorAll(".page")];
+    const tabs = [...document.querySelectorAll(".tabs a")];
+    const nav = document.querySelector(".tabs");
+    function route(key, scroll) {
+      const page = pages.find((p) => p.dataset.page === key) || pages[0];
+      pages.forEach((p) => (p.hidden = p !== page));
+      tabs.forEach((t) => (t.dataset.tab === page.dataset.page ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current")));
+      if (page.dataset.page === "projects") { slides.scrollLeft = panels[current].offsetLeft - slides.offsetLeft; mark(); }
+      if (scroll && window.scrollY > nav.offsetTop) window.scrollTo({ top: nav.offsetTop });
+    }
+    tabs.forEach((t) => t.addEventListener("click", (e) => {
+      e.preventDefault();
+      try { history.pushState(null, "", "#" + t.dataset.tab); } catch (err) { /* file preview */ }
+      route(t.dataset.tab, true);
+    }));
+    window.addEventListener("popstate", () => route(location.hash.slice(1), true));
+    route(location.hash.slice(1), false);
+  })();
 </script>
 </body>
 </html>
