@@ -118,9 +118,13 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 
 /* Project carousel: one feature panel at a time, swipe or use the arrows and dots */
 .carousel { display: grid; gap: 14px; min-width: 0; }
-.slides { display: flex; align-items: flex-start; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; transition: height .3s ease; }
+.slides { display: flex; align-items: stretch; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .slides::-webkit-scrollbar { display: none; }
-.slides > .feature { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+.slides > .feature { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; }
+/* Every slide is as tall as the tallest; the dark visual grows so numbers and links line up across slides */
+.slides > .feature > .stage, .slides > .feature > .stage-wrap { flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center; background: #0b1026; border-radius: 6px; }
+.slides > .feature > .cta { align-self: flex-start; }
+.slides > .feature > p { min-height: 5.1em; } /* three lines, so every visual starts at the same height */
 .carousel-nav { display: flex; align-items: center; justify-content: center; gap: 16px; }
 .arrow { font: 500 15px var(--font-mono); color: var(--accent); background: var(--surface); border: 1px solid var(--line); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; }
 .arrow:hover:not(:disabled) { border-color: var(--accent); }
@@ -137,6 +141,26 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 #gpt svg .pbar { transform-box: fill-box; transform-origin: center bottom; transition: transform .7s ease; }
 #gpt svg .arc { transition: opacity .7s ease; }
 @media (prefers-reduced-motion: reduce) { #gpt svg * { transition: none !important; } }
+
+/* Visual stages and stat strips on the project slides */
+.stage, .stage-wrap { position: relative; min-width: 0; }
+.on-stage { position: absolute; top: 10px; }
+#resample.on-stage { left: 10px; }
+#gptToggle.on-stage { right: 10px; }
+.pill { font: 500 12.5px var(--font-mono); color: #e4ecf8; background: rgba(21,36,60,.85); border: 1px solid #3b5a85; border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.pill:hover { border-color: #7fb0ff; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.stats div { display: grid; gap: 2px; border-top: 2px solid var(--accent); padding-top: 8px; }
+.stats b { font-family: var(--font-display); font-size: 26px; font-weight: 700; line-height: 1.1; color: var(--accent); }
+.stats span { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; font-family: var(--font-mono); font-size: 13px; }
+.controls input { flex: 1 1 160px; accent-color: var(--accent); }
+.controls output { min-width: 2ch; font-weight: 500; color: var(--accent); }
+.controls .pill { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.bob { animation: bob 4.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .bob { animation: none; } }
+@media (max-width: 600px) { .stats b { font-size: 21px; } }
 
 /* Smaller projects */
 .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
@@ -185,119 +209,77 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     <div class="feature" role="group" aria-roledescription="slide" aria-label="1 of 5: Word Detective">
       <span class="tag">2026 · Interactive tool</span>
       <h3>Word Detective</h3>
-      <p>Which words give away AI-written text? Word Detective compares paired AI and human answers to the same questions and estimates, for every word, how likely it is to appear in each. The words with the biggest gap are the best clues.</p>
-      <p>The data covers four styles of Q&amp;A: Reddit "Explain Like I'm 5", medical, financial, and CS/AI Wikipedia.</p>
-
-      <div class="formula" role="img" aria-label="Worked example for the word super">
-        Worked example, W = text contains "super"<br>
-        P(W | AI) &nbsp;&nbsp;&nbsp;≈ count(W | AI) / n &nbsp;&nbsp;&nbsp;= 336 / 60,614 ≈ <b>0.0055</b><br>
-        P(W | human) ≈ count(W | human) / n = 5 / 55,922 &nbsp;&nbsp;≈ <b>0.0001</b>
+      <p>Which words give away AI-written text? Word Detective compares AI and human answers to the same questions and ranks the words whose chance of appearing differs most.</p>
+      <div class="stage" id="wd" aria-label="Bubble chart of the words most typical of AI answers"></div>
+      <div class="stats">
+        <div><b>116,536</b><span>answers compared</span></div>
+        <div><b>4</b><span>Q&amp;A styles</span></div>
+        <div><b>62×</b><span>"super" in AI vs human</span></div>
       </div>
-
-      <div class="chart-head">
-        <strong style="font-family:var(--font-display);font-size:17px">Strongest AI clues on "Explain Like I'm 5"</strong>
-        <span class="note">count(AI) − count(human)</span>
-      </div>
-      <div class="bars" id="bars" aria-label="Top words by count difference"></div>
-
-      <p class="q">Same question, two answers: <em>Why doesn't a candle smoke while burning, but does when you blow it out?</em></p>
-      <div class="compare">
-        <div class="quote"><span class="who">AI</span>When a candle is burning, the flame is <em class="hit">super</em> hot and completely burns all the wax… It's <em class="hit">like</em> the flame eats it all up…</div>
-        <div class="quote human"><span class="who">Human</span>When the flame is lit… that smoke is being burned. The smoke is vaporized wax.</div>
-      </div>
-
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/ai-text">Open Word Detective ↗</a>
     </div>
 
     <div class="feature" role="group" aria-roledescription="slide" aria-label="2 of 5: Inference Time Calculator">
       <span class="tag">2026 · Interactive tool</span>
       <h3>Inference Time Calculator</h3>
-      <p>How many copies of an AI model do you need before at least one fixes the bug? Give the same bug to several copies at once; if any copy fixes it, you are done. The calculator finds the smallest number of copies that reaches the confidence you want.</p>
-      <p>It uses the one-try rate of DeepSeek-Coder-V2-Instruct on real GitHub bugs (SWE-bench Lite), from Brown et al., "Large Language Monkeys," 2024.</p>
-
-      <div class="formula" role="img" aria-label="Worked example for a 99 percent target">
-        E = at least one copy fixes the bug, P(F<sub>i</sub>) = 0.159<br>
-        P(E) = 1 − P(all fail) = 1 − (1 − 0.159)<sup>n</sup><br>
-        1 − 0.841<sup>n</sup> ≥ 0.99 &nbsp;⇒&nbsp; n = ⌈ ln 0.01 / ln 0.841 ⌉ = ⌈ 26.6 ⌉ = <b>27 copies</b>
+      <p>How many copies of an AI model should try the same bug before one of them fixes it? Pick a number and run them.</p>
+      <div class="stage" id="itc" aria-label="Copies of a model trying a bug, and the chance at least one fixes it"></div>
+      <div class="controls">
+        <label for="itcN">Copies</label><input type="range" id="itcN" min="1" max="40" value="27"><output id="itcOut">27</output>
+        <button type="button" class="pill" id="itcRun">Run them</button>
       </div>
-
-      <div class="chart-head">
-        <strong style="font-family:var(--font-display);font-size:17px">Chance at least one copy fixes the bug</strong>
-        <span class="note">copies → P(E)</span>
+      <div class="stats">
+        <div><b>15.9%</b><span>one copy fixes it</span></div>
+        <div><b>27</b><span>copies for 99%</span></div>
+        <div><b>SWE-bench</b><span>real GitHub bugs</span></div>
       </div>
-      <div class="bars" id="copies" aria-label="Chance of at least one fix by number of copies"></div>
-
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/inference-time">Open Inference Time Calculator ↗</a>
     </div>
 
     <div class="feature" role="group" aria-roledescription="slide" aria-label="3 of 5: Small Art Model">
       <span class="tag">2026 · Generative model</span>
       <h3>Small Art Model</h3>
-      <p>Small Art Model paints a city street at night from a short probabilistic story. Each building gets a random height and is either an office or an apartment, and each window is lit with a chance that depends on which. Run the story again and you get a new city.</p>
-      <p>To check the story, the tool compares 1,200 buildings from the model with 1,200 real ones by counting lit windows per building. A beta tab lets you describe any picture, and an agent writes the story that paints it.</p>
-
-      <div class="formula" role="img" aria-label="The generative story">
-        for each of 24 buildings:<br>
-        &nbsp;&nbsp;NumFloors ~ Binomial(20, <b>θ₁</b>)<br>
-        &nbsp;&nbsp;IsOffice &nbsp;~ Bernoulli(<b>θ₄</b>)<br>
-        &nbsp;&nbsp;for each floor: IsLit ~ Bernoulli(IsOffice ? <b>θ₂</b> : <b>θ₃</b>)
+      <p>A short probabilistic story paints a city at night: random building heights, offices or apartments, and windows lit by chance. Every run is a new city.</p>
+      <div class="stage-wrap">
+        <div id="skyline" aria-label="A randomly generated city skyline at night"></div>
+        <button type="button" class="pill on-stage" id="resample">New city</button>
       </div>
-
-      <div class="chart-head">
-        <strong style="font-family:var(--font-display);font-size:17px">One city from the story</strong>
-        <button type="button" class="arrow" id="resample" style="width:auto;border-radius:4px;padding:0 12px;font-size:13px;height:30px">New sample</button>
+      <div class="stats">
+        <div><b>24</b><span>buildings per city</span></div>
+        <div><b>4</b><span>probabilities set it all</span></div>
+        <div><b>1,200</b><span>buildings checked vs real</span></div>
       </div>
-      <div id="skyline" aria-label="A randomly generated city skyline at night"></div>
-
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/small-art-model">Open Small Art Model ↗</a>
     </div>
 
     <div class="feature" role="group" aria-roledescription="slide" aria-label="4 of 5: The Hidden Chamber">
       <span class="tag">2026 · Interactive tool</span>
       <h3>The Hidden Chamber</h3>
-      <p>In 2017 a team found a hidden hollow in the Great Pyramid without moving a stone: they counted muons, particles from space that pass through rock, under it. The Hidden Chamber does the same in a pyramid of its own. A plate under it counts muons each minute for an hour; less stone above means more get through.</p>
-      <p>Each minute's count is a Poisson random variable, and physics sets its average from the meters of stone above the plate. Climbing the log-likelihood (maximum likelihood estimation) finds the thickness that best explains the hour, which shows how much stone is missing. A second view lets you hide a room of your own and count muons at five plates.</p>
-
-      <div class="formula" role="img" aria-label="The model and its best fit">
-        for each of 60 minutes: count<sub>i</sub> ~ Poisson(<b>θ₁</b>), &nbsp;θ₁ = 20 · 0.9<sup>θ₂/10</sup><br>
-        solid stone: θ₂ = 146 m ⇒ θ₁ ≈ 4.3 muons a minute<br>
-        best fit: &nbsp;&nbsp;θ₂ = <b>126 m</b> ⇒ θ₁ ≈ 5.3<br>
-        about <b>20 m of stone missing</b>, 570× more likely than solid
+      <p>In 2017 physicists found a hidden room in the Great Pyramid by counting muons from space under it. The Hidden Chamber does the same in a pyramid of its own and finds the missing stone by maximum likelihood.</p>
+      <div class="stage" id="hc" aria-label="Muons falling through a pyramid onto a counting plate, and the counts per minute against a Poisson model"></div>
+      <div class="stats">
+        <div><b>60</b><span>one-minute counts</span></div>
+        <div><b>20 m</b><span>of stone missing</span></div>
+        <div><b>570×</b><span>likelier than solid stone</span></div>
       </div>
-
-      <div class="chart-head">
-        <strong style="font-family:var(--font-display);font-size:17px">Minutes expected at each count, θ₁ = 5.3</strong>
-        <span class="note">muons in one minute → minutes</span>
-      </div>
-      <div class="bars" id="muons" aria-label="Expected minutes out of 60 at each muon count"></div>
-
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/hidden-chamber">Open The Hidden Chamber ↗</a>
     </div>
 
     <div class="feature" role="group" aria-roledescription="slide" aria-label="5 of 5: Rewrite GPT-2">
       <span class="tag">2026 · Model editing</span>
       <h3>Rewrite GPT-2</h3>
-      <p>Where does a language model keep a fact? Rewrite GPT-2 looks inside GPT-2 for the fact that the Louvre is in Paris, then trains a copy to believe it is in Rome. Switching off one part of the model at a time (ablation) shows which part the answer depends on.</p>
-      <p>Gradient ascent on the log-likelihood of "Rome" then changes only that part: one 768-number row of the word-embedding table, out of 124,439,808 parameters, trained on 4 sentences. On new sentences it never saw, 4 of 4 goal lines held, and sentences with no Louvre in them kept their answer.</p>
-
-      <div class="formula" role="img" aria-label="The rewrite and its result">
-        maximize (1/4) Σ log₁₀ P(Rome | sentence), step size 0.2<br>
-        change only: the embedding row for "vre" (768 parameters)<br>
-        log-likelihood: −1.65 → ≈ 0 in 120 steps<br>
-        "The Louvre is located in the city of ___": P(Paris) <b>0.38</b> → P(Rome) <b>0.99</b>
-      </div>
-
-      <div class="chart-head">
-        <strong style="font-family:var(--font-display);font-size:17px">Inside GPT-2: 12 layers over the sentence</strong>
-        <div class="toggle" id="gptToggle" role="group" aria-label="Show GPT-2 before or after the rewrite">
-          <button type="button" data-s="0" aria-pressed="true">Before</button><button type="button" data-s="1" aria-pressed="false">After rewrite</button>
+      <p>Where does GPT-2 keep the fact that the Louvre is in Paris? Rewrite GPT-2 finds it, then edits one row of the model so it believes Rome.</p>
+      <div class="stage-wrap">
+        <div id="gpt" aria-label="GPT-2 layers over the sentence The Louvre is located in the city of, with its next-word guesses"></div>
+        <div class="toggle on-stage" id="gptToggle" role="group" aria-label="Show GPT-2 before or after the rewrite">
+          <button type="button" data-s="0" aria-pressed="true">Before</button><button type="button" data-s="1" aria-pressed="false">After</button>
         </div>
       </div>
-      <div id="gpt" aria-label="GPT-2 layers over the sentence The Louvre is located in the city of, with its next-word guesses"></div>
-      <p class="q">Switching off the row for <em>vre</em> drops P(Paris) from 0.61 to 0.02; the row for <em>city</em> barely matters (0.59). So the rewrite changes only the <em>vre</em> row.</p>
-
-      <p class="q">Editing one fact in a language model without changing anything else is still an open research problem (Meng et al., "Locating and Editing Factual Associations in GPT", 2022).</p>
-
+      <div class="stats">
+        <div><b>768</b><span>of 124M parameters changed</span></div>
+        <div><b>4</b><span>training sentences</span></div>
+        <div><b>4 / 4</b><span>goals held on new sentences</span></div>
+      </div>
       <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/rewrite-gpt2">Open Rewrite GPT-2 ↗</a>
     </div>
     </div>
@@ -470,29 +452,139 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
 </div>
 
 <script>
-  // Real values from the Word Detective results table (ELI5 dataset, top 10 words).
-  const words = [["like",815],["super",331],["tiny",236],["big",233],["special",167],["make",167],["making",148],["even",135],["it's",134],["little",113]];
-  const max = words[0][1];
-  const host = document.getElementById("bars");
-  host.innerHTML = words.map(([w, n]) =>
-    `<div class="bar"><span>${w}</span><div class="track"><div class="fill" style="width:${(n / max * 100).toFixed(1)}%"></div></div><span class="n">${n}</span></div>`
-  ).join("");
+  const NS = "http://www.w3.org/2000/svg";
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const MONO = "JetBrains Mono, monospace", SERIF = "Literata, Georgia, serif";
+  const svgOpen = (W, H) => `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;border-radius:6px"><rect width="${W}" height="${H}" rx="6" fill="#0b1026"/>`;
 
-  // P(at least one of n copies fixes the bug) with a one-try rate of 0.159.
-  document.getElementById("copies").innerHTML = [1, 5, 10, 20, 27].map((n) => {
-    const v = 1 - Math.pow(1 - 0.159, n);
-    return `<div class="bar"><span>${n} ${n === 1 ? "copy" : "copies"}</span><div class="track"><div class="fill" style="width:${(v * 100).toFixed(1)}%"></div></div><span class="n">${(v * 100).toFixed(1)}%</span></div>`;
-  }).join("");
-
-  // The Hidden Chamber: Poisson(5.3) expected minutes out of 60 at each count (the best-fit model in the app).
+  // Word Detective: the ten strongest AI clues on ELI5, sized by count(AI) − count(human) from the results table.
   (() => {
-    const lam = 5.3, rows = [];
-    let p = Math.exp(-lam);
-    for (let k = 0; k <= 11; k++) { if (k > 0) p *= lam / k; rows.push([k, 60 * p]); }
-    const top = Math.max(...rows.map((r) => r[1]));
-    document.getElementById("muons").innerHTML = rows.map(([k, m]) =>
-      `<div class="bar"><span>${k} muon${k === 1 ? "" : "s"}</span><div class="track"><div class="fill" style="width:${(m / top * 100).toFixed(1)}%"></div></div><span class="n">${m.toFixed(1)}</span></div>`
-    ).join("");
+    const words = [["like",815],["super",331],["tiny",236],["big",233],["special",167],["make",167],["making",148],["even",135],["it's",134],["little",113]];
+    const W = 640, H = 360;
+    const spots = [[320,128],[196,96],[440,96],[450,204],[86,100],[200,214],[560,92],[90,206],[566,196],[322,250]];
+    const placed = words.map(([w, n], k) => ({ x: spots[k][0], y: spots[k][1], r: 16 + 52 * Math.sqrt(n / 815), w, n, k }));
+    let s = svgOpen(W, H) + `<text x="20" y="22" font-family="${MONO}" font-size="11" fill="#9db0cc">MOST TYPICAL OF AI ANSWERS · EXPLAIN LIKE I'M 5</text>`;
+    placed.forEach((p) => {
+      s += `<g class="bob" style="animation-delay:${(-p.k * 0.7).toFixed(1)}s"><circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${p.r.toFixed(1)}" fill="#f07ce8" fill-opacity="${(0.9 - p.k * 0.06).toFixed(2)}"/>`;
+      s += `<text x="${p.x.toFixed(1)}" y="${(p.y + p.r * 0.12).toFixed(1)}" text-anchor="middle" font-family="${SERIF}" font-size="${Math.max(13, p.r * 0.42).toFixed(0)}" fill="#0b1026" font-weight="600">${p.w}</text>`;
+      s += `<text x="${p.x.toFixed(1)}" y="${(p.y + p.r * 0.12 + Math.max(12, p.r * 0.3)).toFixed(1)}" text-anchor="middle" font-family="${MONO}" font-size="10.5" fill="#0b1026" opacity=".75">+${p.n}</text></g>`;
+    });
+    s += `<line x1="20" x2="620" y1="298" y2="298" stroke="#263a58"/>`;
+    s += `<text x="20" y="324" font-family="${MONO}" font-size="11" fill="#9db0cc">AI</text><text x="74" y="324" font-family="${SERIF}" font-size="14" fill="#e4ecf8">“the flame is <tspan fill="#f07ce8" font-weight="600">super</tspan> hot… it's <tspan fill="#f07ce8" font-weight="600">like</tspan> the flame eats it all up”</text>`;
+    s += `<text x="20" y="346" font-family="${MONO}" font-size="11" fill="#9db0cc">HUMAN</text><text x="74" y="346" font-family="${SERIF}" font-size="14" fill="#9db0cc">“that smoke is being burned. The smoke is vaporized wax.”</text>`;
+    document.getElementById("wd").innerHTML = s + `</svg>`;
+  })();
+
+  // Inference Time Calculator: P(at least one of n copies fixes the bug) = 1 − 0.841^n.
+  (() => {
+    const p = 0.159, W = 640, H = 290, cols = 8, cell = 30, g = 8, gx0 = 22, gy0 = 62;
+    const P = (n) => 1 - Math.pow(1 - p, n);
+    const px0 = 380, px1 = 616, py0 = 236, py1 = 70, X = (n) => px0 + (n / 40) * (px1 - px0), Y = (v) => py0 - v * (py0 - py1);
+    let s = svgOpen(W, H) + `<text x="22" y="30" font-family="${MONO}" font-size="11" fill="#9db0cc">EACH SQUARE IS ONE COPY TRYING THE BUG</text>`;
+    for (let i = 0; i < 40; i++) {
+      const x = gx0 + (i % cols) * (cell + g), y = gy0 + Math.floor(i / cols) * (cell + g);
+      s += `<rect class="cp" data-i="${i}" x="${x}" y="${y}" width="${cell}" height="${cell}" rx="5"/><text class="cpt" data-i="${i}" x="${x + cell / 2}" y="${y + cell / 2 + 5}" text-anchor="middle" font-size="15" fill="#0b1026" font-weight="700"></text>`;
+    }
+    let d = "";
+    for (let n = 0; n <= 40; n++) d += `${n ? "L" : "M"}${X(n).toFixed(1)} ${Y(P(n)).toFixed(1)}`;
+    s += `<line x1="${px0}" x2="${px1}" y1="${Y(0.99)}" y2="${Y(0.99)}" stroke="#f0bd4f" stroke-dasharray="4 4"/><text x="${px1}" y="${Y(0.99) + 16}" text-anchor="end" font-family="${MONO}" font-size="10.5" fill="#f0bd4f">99%</text>`;
+    s += `<line x1="${px0}" x2="${px1}" y1="${py0}" y2="${py0}" stroke="#3b5a85"/><text x="${px0}" y="${py0 + 18}" font-family="${MONO}" font-size="10.5" fill="#9db0cc">1</text><text x="${px1}" y="${py0 + 18}" text-anchor="end" font-family="${MONO}" font-size="10.5" fill="#9db0cc">40 copies</text>`;
+    s += `<path d="${d}" fill="none" stroke="#7fd3ff" stroke-width="2.5"/><line id="itcV" y1="${py0}" stroke="#f07ce8" stroke-dasharray="3 4"/><circle id="itcDot" r="6" fill="#f07ce8"/>`;
+    s += `<text id="itcBig" x="${px0}" y="42" font-family="${SERIF}" font-size="30" font-weight="600" fill="#e4ecf8"></text><text id="itcSub" x="${px0}" y="60" font-family="${MONO}" font-size="11" fill="#9db0cc"></text>`;
+    s += `<text id="itcRes" x="22" y="${H - 14}" font-family="${MONO}" font-size="12" fill="#f0bd4f"></text>`;
+    const host = document.getElementById("itc");
+    host.innerHTML = s + `</svg>`;
+    const slider = document.getElementById("itcN"), out = document.getElementById("itcOut");
+    const cps = [...host.querySelectorAll(".cp")], cpt = [...host.querySelectorAll(".cpt")];
+    let timers = [];
+    function draw(reset) {
+      const n = +slider.value; out.textContent = n;
+      if (reset) { timers.forEach(clearTimeout); timers = []; host.querySelector("#itcRes").textContent = ""; cpt.forEach((t) => (t.textContent = "")); }
+      cps.forEach((r, i) => { if (reset || i >= n) { r.setAttribute("fill", i < n ? "#2f5fae" : "#101a2e"); r.setAttribute("stroke", i < n ? "#7fb0ff" : "#1d2c47"); } });
+      const v = P(n);
+      host.querySelector("#itcDot").setAttribute("cx", X(n)); host.querySelector("#itcDot").setAttribute("cy", Y(v));
+      const vl = host.querySelector("#itcV"); vl.setAttribute("x1", X(n)); vl.setAttribute("x2", X(n)); vl.setAttribute("y2", Y(v));
+      host.querySelector("#itcBig").textContent = `${(v * 100).toFixed(1)}%`;
+      host.querySelector("#itcSub").textContent = `chance at least one of ${n} fixes it`;
+    }
+    slider.addEventListener("input", () => draw(true));
+    document.getElementById("itcRun").addEventListener("click", () => {
+      draw(true);
+      const n = +slider.value; let fixed = 0;
+      for (let i = 0; i < n; i++) {
+        const ok = Math.random() < p; if (ok) fixed++;
+        timers.push(setTimeout(() => {
+          cps[i].setAttribute("fill", ok ? "#f0bd4f" : "#22355a"); cps[i].setAttribute("stroke", ok ? "#f0bd4f" : "#4a6a99");
+          cpt[i].textContent = ok ? "✓" : ""; 
+        }, calm ? 0 : i * 45));
+      }
+      timers.push(setTimeout(() => {
+        host.querySelector("#itcRes").textContent = fixed ? `${fixed} of ${n} copies fixed it` : `none of ${n} fixed it: happens ${((1 - P(n)) * 100).toFixed(1)}% of the time`;
+      }, calm ? 0 : n * 45 + 100));
+    });
+    draw(true);
+  })();
+
+  // The Hidden Chamber: each minute the plate counts k ~ Poisson(5.3) muons (the best-fit model in the app).
+  (() => {
+    const lam = 5.3, W = 640, H = 340, base = 300, apex = [190, 52], bx0 = 30, bx1 = 350, plate = [162, 218];
+    const pois = () => { let L = Math.exp(-lam), k = 0, q = 1; do { k++; q *= Math.random(); } while (q > L); return k - 1; };
+    const exp = []; { let q = Math.exp(-lam); for (let k = 0; k <= 11; k++) { if (k) q *= lam / k; exp.push(60 * q); } }
+    const top = (x) => x < bx0 || x > bx1 ? base : base - (base - apex[1]) * (1 - Math.abs(x - apex[0]) / (x < apex[0] ? apex[0] - bx0 : bx1 - apex[0]));
+    let s = svgOpen(W, H) + `<defs><clipPath id="pyr"><path d="M${bx0} ${base} L${apex[0]} ${apex[1]} L${bx1} ${base} Z"/></clipPath></defs>`;
+    s += `<path d="M${bx0} ${base} L${apex[0]} ${apex[1]} L${bx1} ${base} Z" fill="#2a3756"/><g clip-path="url(#pyr)" stroke="#3b4c70" stroke-width="1">`;
+    for (let y = base - 16; y > apex[1]; y -= 16) s += `<line x1="0" x2="400" y1="${y}" y2="${y}"/>`;
+    s += `</g><rect x="162" y="150" width="58" height="22" fill="#0b1026" stroke="#f0bd4f" stroke-dasharray="4 3"/><text x="226" y="165" font-family="${MONO}" font-size="10.5" fill="#f0bd4f">hidden room?</text>`;
+    s += `<line x1="0" x2="380" y1="${base + 10}" y2="${base + 10}" stroke="#263a58"/><rect id="plate" x="${plate[0]}" y="${base + 4}" width="${plate[1] - plate[0]}" height="6" rx="2" fill="#f0bd4f"/>`;
+    s += `<text x="190" y="${base + 30}" text-anchor="middle" font-family="${MONO}" font-size="10.5" fill="#9db0cc">detector</text><g id="mu"></g>`;
+    const hx = 412, hb = 270, bw = 14, bg = 4, sc = 15;
+    s += `<text x="${hx}" y="40" font-family="${MONO}" font-size="11" fill="#9db0cc">MINUTES AT EACH COUNT</text><text id="hcMin" x="${hx}" y="62" font-family="${SERIF}" font-size="20" font-weight="600" fill="#e4ecf8"></text>`;
+    for (let k = 0; k <= 11; k++) {
+      const x = hx + k * (bw + bg);
+      s += `<rect class="ob" data-k="${k}" x="${x}" width="${bw}" fill="#7fd3ff" y="${hb}" height="0"/><rect x="${x}" y="${(hb - exp[k] * sc).toFixed(1)}" width="${bw}" height="${(exp[k] * sc).toFixed(1)}" fill="none" stroke="#f07ce8" stroke-width="1.5"/>`;
+      if (k % 2 === 0) s += `<text x="${x + bw / 2}" y="${hb + 16}" text-anchor="middle" font-family="${MONO}" font-size="10" fill="#9db0cc">${k}</text>`;
+    }
+    s += `<text x="${hx}" y="${hb + 34}" font-family="${MONO}" font-size="10.5" fill="#9db0cc">muons in one minute</text>`;
+    s += `<rect x="${hx}" y="${hb + 46}" width="10" height="10" fill="#7fd3ff"/><text x="${hx + 15}" y="${hb + 55}" font-family="${MONO}" font-size="10.5" fill="#9db0cc">counted</text><rect x="${hx + 82}" y="${hb + 46}" width="10" height="10" fill="none" stroke="#f07ce8" stroke-width="1.5"/><text x="${hx + 97}" y="${hb + 55}" font-family="${MONO}" font-size="10.5" fill="#9db0cc">Poisson(5.3)</text>`;
+    const host = document.getElementById("hc");
+    host.innerHTML = s + `</svg>`;
+    const mu = host.querySelector("#mu"), obs = [...host.querySelectorAll(".ob")], minEl = host.querySelector("#hcMin"), plateEl = host.querySelector("#plate");
+    let hist = new Array(12).fill(0), minute = 0, flying = [], queue = [], tMin = 0, last = 0, visible = false;
+    const MIN = 1100;
+    function drawHist() {
+      obs.forEach((r) => { const h = hist[r.dataset.k] * sc; r.setAttribute("y", hb - h); r.setAttribute("height", h); });
+      minEl.textContent = `minute ${minute} of 60`;
+    }
+    function spawn(x, end, hit) {
+      const el = document.createElementNS(NS, "line");
+      el.setAttribute("stroke", hit ? "#7fd3ff" : "#9db0cc"); el.setAttribute("stroke-width", hit ? 2 : 1.2); el.setAttribute("stroke-linecap", "round"); el.setAttribute("opacity", hit ? 1 : 0.55);
+      mu.appendChild(el); flying.push({ x, y: -10, end, hit, el });
+    }
+    function newMinute() {
+      if (minute === 60) { hist.fill(0); minute = 0; }
+      const k = Math.min(pois(), 11);
+      queue = Array.from({ length: k }, () => Math.random() * MIN * 0.8).sort((a, b) => a - b);
+      queue.k = k;
+    }
+    if (calm) { for (let m = 0; m < 60; m++) hist[Math.min(pois(), 11)]++; minute = 60; drawHist(); return; }
+    newMinute(); drawHist();
+    function frame(t) {
+      requestAnimationFrame(frame);
+      const dt = Math.min(50, t - (last || t)); last = t;
+      if (!visible || window.slideIndex !== 3) return;
+      tMin += dt;
+      while (queue.length && queue[0] <= tMin) { queue.shift(); spawn(plate[0] + 6 + Math.random() * (plate[1] - plate[0] - 12), base + 4, true); }
+      if (Math.random() < dt / 90) { const x = 10 + Math.random() * 370, tp = top(x); spawn(x, tp < base && Math.random() < 0.8 ? tp + Math.random() * (base - tp) : base + 10, false); }
+      if (tMin >= MIN) { hist[queue.k]++; minute++; drawHist(); tMin = 0; newMinute(); }
+      flying = flying.filter((m) => {
+        m.y += dt * 0.32;
+        if (m.y >= m.end) { if (m.hit) { plateEl.setAttribute("fill", "#ffffff"); setTimeout(() => plateEl.setAttribute("fill", "#f0bd4f"), 120); } m.el.remove(); return false; }
+        m.el.setAttribute("x1", m.x); m.el.setAttribute("x2", m.x); m.el.setAttribute("y1", Math.max(0, m.y - 14)); m.el.setAttribute("y2", m.y);
+        return true;
+      });
+    }
+    new IntersectionObserver((e) => (visible = e[0].isIntersecting)).observe(host);
+    requestAnimationFrame(frame);
   })();
 
   // Rewrite GPT-2: a layer stack over the sentence, before and after the rewrite (numbers from the course app).
@@ -604,10 +696,10 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     mark();
   }
   function mark() {
+    window.slideIndex = current;
     dots.forEach((d, k) => d.setAttribute("aria-current", String(k === current)));
     prev.disabled = current === 0;
     next.disabled = current === panels.length - 1;
-    slides.style.height = panels[current].offsetHeight + "px";
   }
   prev.addEventListener("click", () => show(current - 1));
   next.addEventListener("click", () => show(current + 1));
