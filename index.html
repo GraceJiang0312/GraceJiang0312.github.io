@@ -72,7 +72,7 @@ h1 .alt { display: block; font-weight: 400; font-size: .42em; letter-spacing: 0;
 .links span { color: var(--muted); }
 
 /* Section tabs: each part of the site is its own page */
-.tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px 15px; overflow-x: auto; scrollbar-width: none; background: var(--paper); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .02em; text-transform: uppercase; }
+.tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px 11px; overflow-x: auto; scrollbar-width: none; background: var(--paper); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0; text-transform: uppercase; }
 .tabs::-webkit-scrollbar { display: none; }
 .tabs a { flex: none; padding: 14px 0 12px; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .tabs a:hover { color: var(--ink); }
@@ -222,8 +222,8 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     <a href="#more" data-tab="more">More projects</a>
     <a href="#more-experience" data-tab="more-experience">More experience</a>
     <a href="#education" data-tab="education">Education</a>
-    <a href="#mentorship" data-tab="mentorship">Mentorship</a>
-    <a href="#skills" data-tab="skills">Skills</a>
+    <a href="#soft-skills" data-tab="soft-skills">Soft skills</a>
+    <a href="#skills" data-tab="skills">Technical skills</a>
   </nav>
 
   <main>
@@ -512,9 +512,9 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     </section>
     </div>
 
-    <div class="page" data-page="mentorship" hidden>
+    <div class="page" data-page="soft-skills" hidden>
     <section id="mentorship">
-      <h2>Mentorship</h2>
+      <h2>Soft skills</h2>
       <div class="entries">
         <div class="entry has-pic">
           <div class="when">2026</div>
@@ -560,7 +560,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
 
     <div class="page" data-page="skills" hidden>
     <section id="skills">
-      <h2>Skills</h2>
+      <h2>Technical skills</h2>
       <dl class="skills">
         <div><dt>Agents &amp; LLMs</dt><dd>AI agents, multi-agent systems, Google ADK, LangChain, LangGraph, RAG, prompt engineering</dd></div>
         <div><dt>ML</dt><dd>PyTorch, TensorFlow, NLP, reinforcement learning</dd></div>
