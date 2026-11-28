@@ -173,6 +173,7 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 .controls input { flex: 1 1 160px; accent-color: var(--accent); }
 .controls output { min-width: 2ch; font-weight: 500; color: var(--accent); }
 .controls .pill { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.ff-controls { display: grid; grid-template-columns: auto minmax(0, 1fr) 4.5ch; gap: 6px 12px; }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 .bob { animation: bob 4.2s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .bob { animation: none; } }
@@ -240,7 +241,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
       </div>
       <div class="carousel" aria-roledescription="carousel" aria-label="Stanford Probability for AI projects">
       <div class="slides" id="slides">
-      <div class="feature" role="group" aria-roledescription="slide" aria-label="1 of 5: Word Detective">
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="1 of 6: Word Detective">
         <span class="tag">2026 · Interactive tool</span>
         <h3>Word Detective</h3>
         <p>Which words give away AI-written text? Word Detective compares AI and human answers to the same questions and ranks the words whose chance of appearing differs most.</p>
@@ -253,7 +254,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
         <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/ai-text">Open Word Detective ↗</a>
       </div>
 
-      <div class="feature" role="group" aria-roledescription="slide" aria-label="2 of 5: Inference Time Calculator">
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="2 of 6: Inference Time Calculator">
         <span class="tag">2026 · Interactive tool</span>
         <h3>Inference Time Calculator</h3>
         <p>How many copies of an AI model should try the same bug before one of them fixes it? Pick a number and run them.</p>
@@ -270,7 +271,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
         <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/inference-time">Open Inference Time Calculator ↗</a>
       </div>
 
-      <div class="feature" role="group" aria-roledescription="slide" aria-label="3 of 5: Small Art Model">
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="3 of 6: Small Art Model">
         <span class="tag">2026 · Generative model</span>
         <h3>Small Art Model</h3>
         <p>A short probabilistic story paints a city at night: random building heights, offices or apartments, and windows lit by chance. Every run is a new city.</p>
@@ -286,7 +287,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
         <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/small-art-model">Open Small Art Model ↗</a>
       </div>
 
-      <div class="feature" role="group" aria-roledescription="slide" aria-label="4 of 5: The Hidden Chamber">
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="4 of 6: The Hidden Chamber">
         <span class="tag">2026 · Interactive tool</span>
         <h3>The Hidden Chamber</h3>
         <p>In 2017 physicists found a hidden room in the Great Pyramid by counting muons from space under it. The Hidden Chamber does the same in a pyramid of its own and finds the missing stone by maximum likelihood.</p>
@@ -299,7 +300,25 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
         <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/hidden-chamber">Open The Hidden Chamber ↗</a>
       </div>
 
-      <div class="feature" role="group" aria-roledescription="slide" aria-label="5 of 5: Rewrite GPT-2">
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="5 of 6: Forest or farmland?">
+        <span class="tag">2026 · Classifier</span>
+        <h3>Forest or farmland?</h3>
+        <p>Can a machine tell forest from farmland in a satellite photo? It measures three things in each patch of land and logistic regression turns them into the chance that the patch is forest.</p>
+        <div class="stage" id="ff" aria-label="A satellite patch drawn from three measurements, and the machine's chance that it is forest"></div>
+        <div class="controls ff-controls">
+          <label for="ffD">Dark area</label><input type="range" id="ffD" min="0" max="100" value="100"><output id="ffDo"></output>
+          <label for="ffC">Contrast</label><input type="range" id="ffC" min="0" max="5" step="0.1" value="0.7"><output id="ffCo"></output>
+          <label for="ffG">Greenness</label><input type="range" id="ffG" min="0" max="15" step="0.1" value="9.5"><output id="ffGo"></output>
+        </div>
+        <div class="stats">
+          <div><b>3,880</b><span>Sentinel-2 patches</span></div>
+          <div><b>95%</b><span>right on the test set</span></div>
+          <div><b>95 / 100</b><span>right on a new map</span></div>
+        </div>
+        <a class="cta" href="https://pai.stanford.edu/pai1/portfolio/54wdeVlEVTeFHHkxBKWdM9Tz99r2/forest-or-farmland">Open Forest or farmland? ↗</a>
+      </div>
+
+      <div class="feature" role="group" aria-roledescription="slide" aria-label="6 of 6: Rewrite GPT-2">
         <span class="tag">2026 · Model editing</span>
         <h3>Rewrite GPT-2</h3>
         <p>Where does GPT-2 keep the fact that the Louvre is in Paris? Rewrite GPT-2 finds it, then edits one row of the model so it believes Rome.</p>
@@ -324,6 +343,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
           <button type="button" class="dot" aria-label="Show Inference Time Calculator"></button>
           <button type="button" class="dot" aria-label="Show Small Art Model"></button>
           <button type="button" class="dot" aria-label="Show The Hidden Chamber"></button>
+          <button type="button" class="dot" aria-label="Show Forest or farmland?"></button>
           <button type="button" class="dot" aria-label="Show Rewrite GPT-2"></button>
         </div>
         <button type="button" class="arrow" id="next" aria-label="Next project">→</button>
@@ -687,6 +707,56 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     }
     new IntersectionObserver((e) => (visible = e[0].isIntersecting)).observe(host);
     requestAnimationFrame(frame);
+  })();
+
+  // Forest or farmland?: the trained logistic regression from the course app.
+  // P(forest) = σ(4.71 + 0.052·dark% − 3.02·contrast − 0.352·greenness)
+  (() => {
+    const W = 640, H = 330, w0 = 4.71, w = [0.052, -3.02, -0.352];
+    const sl = ["ffD", "ffC", "ffG"].map((id) => document.getElementById(id));
+    const outs = ["ffDo", "ffCo", "ffGo"].map((id) => document.getElementById(id));
+    let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const cells = Array.from({ length: 64 }, () => ({ u: rnd(), n: (rnd() + rnd() + rnd() - 1.5) * 1.4 }));
+    const P0 = 24, PS = 216, cs = PS / 8;
+    let s = svgOpen(W, H) + `<text x="${P0}" y="26" font-family="${MONO}" font-size="11" fill="#9db0cc">A 640 m PATCH, FROM ABOVE</text>`;
+    cells.forEach((c, i) => { s += `<rect class="ffc" x="${P0 + (i % 8) * cs}" y="${40 + Math.floor(i / 8) * cs}" width="${cs + 0.5}" height="${cs + 0.5}"/>`; });
+    s += `<rect x="${P0}" y="40" width="${PS}" height="${PS}" fill="none" stroke="#3b5a85"/>`;
+    s += `<text id="ffLabel" x="${P0}" y="${40 + PS + 26}" font-family="${SERIF}" font-size="17" fill="#e4ecf8"></text>`;
+    const gx = 300, gw = 316;
+    s += `<text x="${gx}" y="26" font-family="${MONO}" font-size="11" fill="#9db0cc">CHANCE IT IS FOREST</text>`;
+    s += `<text id="ffP" x="${gx}" y="72" font-family="${SERIF}" font-size="40" font-weight="500" fill="#e4ecf8"></text>`;
+    s += `<rect x="${gx}" y="86" width="${gw}" height="12" rx="6" fill="#1a2a4a"/><rect id="ffBar" x="${gx}" y="86" height="12" rx="6" fill="#f07ce8"/>`;
+    s += `<text x="${gx}" y="114" font-family="${MONO}" font-size="10.5" fill="#9db0cc">farmland</text><text x="${gx + gw}" y="114" text-anchor="end" font-family="${MONO}" font-size="10.5" fill="#9db0cc">forest</text>`;
+    s += `<text x="${gx}" y="150" font-family="${MONO}" font-size="11" fill="#9db0cc">WHAT PUSHES IT EACH WAY</text>`;
+    const mid = gx + gw / 2, rows = ["bias", "dark area", "contrast", "greenness"];
+    s += `<line x1="${mid}" x2="${mid}" y1="160" y2="${160 + rows.length * 28}" stroke="#3b5a85"/>`;
+    rows.forEach((r, k) => { const y = 164 + k * 28; s += `<text x="${gx}" y="${y + 13}" font-family="${MONO}" font-size="11" fill="#e4ecf8">${r}</text><rect class="ffr" data-k="${k}" y="${y}" height="16" rx="3"/><text class="ffv" data-k="${k}" y="${y + 13}" font-family="${MONO}" font-size="10.5" fill="#9db0cc"></text>`; });
+    s += `<text x="${mid - 6}" y="${H - 12}" text-anchor="end" font-family="${MONO}" font-size="10" fill="#9db0cc">← farmland</text><text x="${mid + 6}" y="${H - 12}" font-family="${MONO}" font-size="10" fill="#9db0cc">forest →</text>`;
+    const host = document.getElementById("ff");
+    host.innerHTML = s + `</svg>`;
+    const rects = [...host.querySelectorAll(".ffc")], bars = [...host.querySelectorAll(".ffr")], vals = [...host.querySelectorAll(".ffv")];
+    const clamp = (v) => Math.max(0, Math.min(255, Math.round(v)));
+    function draw() {
+      const d = +sl[0].value, c = +sl[1].value, g = +sl[2].value;
+      outs[0].textContent = d + "%"; outs[1].textContent = c.toFixed(1); outs[2].textContent = g.toFixed(1);
+      cells.forEach((cell, i) => {
+        const b = (cell.u < d / 100 ? 16 : 40) + c * cell.n * 6;
+        rects[i].setAttribute("fill", `rgb(${clamp(b * 1.9 - g * 2.2)},${clamp(b * 2.1 + g * 2.6)},${clamp(b * 2.2 - g * 1.2)})`);
+      });
+      const parts = [w0, w[0] * d, w[1] * c, w[2] * g], z = parts.reduce((a, v) => a + v, 0), p = 1 / (1 + Math.exp(-z));
+      host.querySelector("#ffP").textContent = p > 0.995 ? "> 0.99" : p < 0.005 ? "< 0.01" : p.toFixed(2);
+      host.querySelector("#ffBar").setAttribute("width", Math.max(6, p * gw));
+      host.querySelector("#ffLabel").textContent = p >= 0.5 ? "The machine says: forest" : "The machine says: farmland";
+      parts.forEach((v, k) => {
+        const len = Math.min(84, Math.abs(v) * 11);
+        bars[k].setAttribute("x", v >= 0 ? mid : mid - len); bars[k].setAttribute("width", Math.max(1, len));
+        bars[k].setAttribute("fill", v >= 0 ? "#7fd3ff" : "#f07ce8");
+        vals[k].textContent = (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(2);
+        vals[k].setAttribute("x", v >= 0 ? mid - 6 : mid + 6); vals[k].setAttribute("text-anchor", v >= 0 ? "end" : "start");
+      });
+    }
+    sl.forEach((x) => x.addEventListener("input", draw));
+    draw();
   })();
 
   // Rewrite GPT-2: a layer stack over the sentence, before and after the rewrite (numbers from the course app).
