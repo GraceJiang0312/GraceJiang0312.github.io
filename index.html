@@ -72,7 +72,7 @@ h1 .alt { display: block; font-weight: 400; font-size: .42em; letter-spacing: 0;
 .links span { color: var(--muted); }
 
 /* Section tabs: each part of the site is its own page */
-.tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px 20px; overflow-x: auto; scrollbar-width: none; background: var(--paper); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; }
+.tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px 15px; overflow-x: auto; scrollbar-width: none; background: var(--paper); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .02em; text-transform: uppercase; }
 .tabs::-webkit-scrollbar { display: none; }
 .tabs a { flex: none; padding: 14px 0 12px; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .tabs a:hover { color: var(--ink); }
@@ -93,6 +93,7 @@ h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-sp
 .entries { display: grid; gap: 32px; }
 
 /* Each job's picture sits under its bullets */
+#mentorship .exp-pic { max-width: 480px !important; }
 .entry.has-pic .exp-pic { grid-column: 2; max-width: 340px; margin: 12px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
 @media (max-width: 600px) {
   .entry, .entry.has-pic { grid-template-columns: minmax(0, 1fr); }
@@ -221,6 +222,7 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
     <a href="#more" data-tab="more">More projects</a>
     <a href="#more-experience" data-tab="more-experience">More experience</a>
     <a href="#education" data-tab="education">Education</a>
+    <a href="#mentorship" data-tab="mentorship">Mentorship</a>
     <a href="#skills" data-tab="skills">Skills</a>
   </nav>
 
@@ -496,13 +498,6 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
           </div>
         </div>
         <div class="entry">
-          <div class="when">2026</div>
-          <div>
-            <h3>Alexa She Builds Mentorship</h3>
-            <p class="role">Program selectee</p>
-          </div>
-        </div>
-        <div class="entry">
           <div class="when">2026 – Present</div>
           <div>
             <h3>Golden Gate University</h3>
@@ -515,6 +510,33 @@ footer { padding-top: 32px; border-top: 1px solid var(--line); font-family: var(
             <h3>University of Toronto</h3>
             <p class="role">BASc, Computer Engineering · Dean's Honours List · Certificate in AI Engineering</p>
           </div>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <div class="page" data-page="mentorship" hidden>
+    <section id="mentorship">
+      <h2>Mentorship</h2>
+      <div class="entries">
+        <div class="entry has-pic">
+          <div class="when">2026</div>
+          <div>
+            <h3>Alexa She Builds Mentorship</h3>
+            <p class="role">Program selectee</p>
+          </div>
+          <svg class="thumb exp-pic" viewBox="0 0 320 180" role="img" aria-label="Behavioral interview practice with my mentor, one Amazon Leadership Principle at a time: Bias for Action, Dive Deep, Disagree and Commit">
+            <text class="lbl" x="160" y="22" text-anchor="middle">BEHAVIORAL PRACTICE WITH MY MENTOR</text>
+            <rect class="soft" x="16" y="36" width="88" height="124" rx="8"/><rect class="ln" x="16" y="36" width="88" height="124" rx="8"/>
+            <path class="mk" d="M65 62 L51 86 H60 L55 108 L70 82 H61 Z"/>
+            <text class="lbl" x="60" y="132" text-anchor="middle" style="fill:var(--ink)">Bias for</text><text class="lbl" x="60" y="147" text-anchor="middle" style="fill:var(--ink)">Action</text>
+            <rect class="soft" x="118" y="36" width="88" height="124" rx="8"/><rect class="ln" x="118" y="36" width="88" height="124" rx="8"/>
+            <circle class="ln" cx="159" cy="82" r="12" stroke-width="2.5"/><path class="ln" d="M168 91 L177 101" stroke-width="3.5"/><path d="M153 82 H165" stroke="var(--mark)" stroke-width="2" stroke-linecap="round"/>
+            <text class="lbl" x="162" y="132" text-anchor="middle" style="fill:var(--ink)">Dive</text><text class="lbl" x="162" y="147" text-anchor="middle" style="fill:var(--ink)">Deep</text>
+            <rect class="soft" x="220" y="36" width="88" height="124" rx="8"/><rect class="ln" x="220" y="36" width="88" height="124" rx="8"/>
+            <path class="ln" d="M250 66 L264 84 M278 66 L264 84" stroke="var(--mark)" stroke-width="2.5"/><path class="ln" d="M264 84 V104 M258 98 L264 104 L270 98" stroke-width="2.5"/>
+            <text class="lbl" x="264" y="132" text-anchor="middle" style="fill:var(--ink)">Disagree and</text><text class="lbl" x="264" y="147" text-anchor="middle" style="fill:var(--ink)">Commit</text>
+          </svg>
         </div>
       </div>
     </section>
